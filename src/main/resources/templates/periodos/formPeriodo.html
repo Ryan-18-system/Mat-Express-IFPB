@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Formulário de Cadastro de Períodos</h1>
+<form th:action="@{/periodoLetivo/listagemDePeriodos}" method="POST" th:object="${periodo}">
+    Ano: <input type="number" th:field="*{ano}"/><br>
+    Período: <input type="number" th:field="*{periodo}"/><br>
+    Início do Período: <input type="date" th:field="*{inicio}"/><br>
+    Fim do Período: <input type="date" th:field="*{fim}"/><br>
+    Atual?: <input type="checkbox" th:field="*{atual}"/><br>
+    <input type="submit" value="Salvar"/>
+</form>
+</body>
+</html>

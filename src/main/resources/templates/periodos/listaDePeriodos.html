@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>
+    Listagem de Períodos
+</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Ano</th>
+        <th>Período</th>
+        <th>Início do Período</th>
+        <th>Fim do Período</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="periodo : ${periodos}">
+        <td th:text="${periodo.getAno()}"></td>
+        <td th:text="${periodo.getPeriodo()}"></td>
+        <td th:text="${periodo.getInicio()}"></td>
+        <td th:text="${periodo.getFim()}"></td>
+        <td th:text="${periodo.isAtual()}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
