@@ -18,7 +18,7 @@ public class PeriodoController {
         model.addAttribute("periodo", periodoLetivo);
         return "periodoletivo/form";
     }
-    @PostMapping("/listagemperiodos")
+    @PostMapping("listagemperiodos")
     public String cadastrarPeriodoLetivo(Model model, PeriodoLetivo periodoLetivo){
         periodoRepository.save(periodoLetivo);
         model.addAttribute("periodos", periodoRepository.findAll());
