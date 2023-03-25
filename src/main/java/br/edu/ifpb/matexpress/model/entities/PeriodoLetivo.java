@@ -24,5 +24,5 @@ public class PeriodoLetivo  implements Serializable {
     private Integer periodo;
     private LocalDate inicio;
     private LocalDate fim;
-    private boolean atual;
+
 }
