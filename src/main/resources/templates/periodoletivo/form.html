@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Formulário de Cadastro de Períodos</h1>
-<form th:action="@{/periodoLetivo/listagemDePeriodos}" method="POST" th:object="${periodo}">
+<form th:action="@{listagemperiodos}" method="POST" th:object="${periodo}">
     Ano: <input type="number" th:field="*{ano}"/><br>
     Período: <input type="number" th:field="*{periodo}"/><br>
     Início do Período: <input type="date" th:field="*{inicio}"/><br>
