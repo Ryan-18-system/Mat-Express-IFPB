@@ -23,8 +23,10 @@
         <td th:text="${periodo.getPeriodo()}"></td>
         <td th:text="${periodo.getInicio()}"></td>
         <td th:text="${periodo.getFim()}"></td>
+        <td><a th:href="@{editarperiodo/{idPeriodo}(idPeriodo=${periodo.getId()})}">Editar Período</a></td>
     </tr>
     </tbody>
 </table>
+<button><a th:href="@{form}">Cadastrar Novo período</a></button>
 </body>
 </html>

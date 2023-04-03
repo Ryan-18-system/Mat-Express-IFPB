@@ -6,12 +6,18 @@
 </head>
 <body>
 <h1>Formulário de Cadastro de Períodos</h1>
-<form th:action="@{listagemperiodos}" method="POST" th:object="${periodo}">
-    Ano: <input type="number" th:field="*{ano}"/><br>
-    Período: <input type="number" th:field="*{periodo}"/><br>
-    Início do Período: <input type="date" th:field="*{inicio}"/><br>
-    Fim do Período: <input type="date" th:field="*{fim}"/><br>
+<form th:action="@{salvarperiodo}" method="POST" th:object="${periodo}">
+    <label for="ano">Ano:</label>
+    <input type="number" id="ano" th:field="*{ano}"/><br>
+    <label for="periodo">Período</label>
+    <input type="number" id="periodo" th:field="*{periodo}"/><br>
+    <label for="inicio-periodo">Início do Período</label>
+    <input type="date" id="inicio-periodo" th:field="*{inicio}" th:value="${periodo.getInicio()}"/><br>
+    <label for="fim-periodo">Fim do Período</label>
+    <input type="date" id="fim-periodo" th:field="*{fim}" th:value="${periodo.getFim()}"/><br>
     <input type="submit" value="Salvar"/>
 </form>
+
+<button><a th:href="@{listagemperiodos}">Cancelar Cadastro</a></button>
 </body>
 </html>
