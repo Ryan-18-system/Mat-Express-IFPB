@@ -7,6 +7,7 @@
 <body>
 <h1>Formulário de Cadastro de Períodos</h1>
 <form th:action="@{salvarperiodo}" method="POST" th:object="${periodo}">
+    <input type="hidden" th:field="*{id}">
     <label for="ano">Ano:</label>
     <input type="number" id="ano" th:field="*{ano}"/><br>
     <label for="periodo">Período</label>
@@ -18,6 +19,6 @@
     <input type="submit" value="Salvar"/>
 </form>
 
-<button><a th:href="@{listagemperiodos}">Cancelar Cadastro</a></button>
+<button><a th:href="@{listarperiodos}">Cancelar Cadastro</a></button>
 </body>
 </html>

@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/periodoletivo")
 public class PeriodoController {
@@ -21,14 +23,17 @@ public class PeriodoController {
     @PostMapping("**/salvarperiodo")
     public String cadastrarPeriodoLetivo(Model model, PeriodoLetivo periodoLetivo){
         periodoService.cadastrarPeriodo(periodoLetivo);
-        model.addAttribute("periodos", periodoService.listarPeriodos());
-        return "periodoletivo/listagem";
+        return "redirect:/matexpress/periodoletivo/listarperiodos";
     }
-    @GetMapping("/listarperiodos")
+    @GetMapping("**/listarperiodos")
     public ModelAndView listarPeriodos(ModelAndView modelAndView){
         modelAndView.setViewName("periodoletivo/listagem");
-        modelAndView.addObject("periodos", periodoService.listarPeriodos());
         return modelAndView;
+    }
+
+    @ModelAttribute("periodos")
+    public List<PeriodoLetivo> periodoLetivos(){
+        return  periodoService.listarPeriodos();
     }
 
     @GetMapping("/editarperiodo/{idPeriodo}")
@@ -36,6 +41,11 @@ public class PeriodoController {
         modelAndView.setViewName("periodoletivo/form");
         modelAndView.addObject("periodo", periodoService.pesquisarPeriodoPorId(idPeriodo));
         return modelAndView;
+    }
+    @GetMapping("/removerperiodo/{idPeriodo}")
+    public String removerPeriodo(@PathVariable("idPeriodo") Long idPeriodo){
+        periodoService.deletarPorId(idPeriodo);
+        return "redirect:/matexpress/periodoletivo/listarperiodos";
     }
 
 }

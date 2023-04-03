@@ -15,6 +15,8 @@
         <th>Período</th>
         <th>Início do Período</th>
         <th>Fim do Período</th>
+        <th>Edição</th>
+        <th>Exclusão</th>
     </tr>
     </thead>
     <tbody>
@@ -24,6 +26,7 @@
         <td th:text="${periodo.getInicio()}"></td>
         <td th:text="${periodo.getFim()}"></td>
         <td><a th:href="@{editarperiodo/{idPeriodo}(idPeriodo=${periodo.getId()})}">Editar Período</a></td>
+        <td><a th:href="@{removerperiodo/{idPeriodo}(idPeriodo=${periodo.getId()})}">Remover Período</a></td>
     </tr>
     </tbody>
 </table>
