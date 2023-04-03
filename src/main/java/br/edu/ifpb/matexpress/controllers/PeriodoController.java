@@ -1,27 +1,51 @@
 package br.edu.ifpb.matexpress.controllers;
 
+import br.edu.ifpb.matexpress.model.services.PeriodoService;
 import br.edu.ifpb.matexpress.model.entities.PeriodoLetivo;
-import br.edu.ifpb.matexpress.model.repositories.PeriodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/periodoletivo")
 public class PeriodoController {
     @Autowired
-    private PeriodoRepository periodoRepository;
-    @RequestMapping("/form")
+    private PeriodoService periodoService;
+    @GetMapping("/form")
     public String formPeriodo(PeriodoLetivo periodoLetivo, Model model){
         model.addAttribute("periodo", periodoLetivo);
         return "periodoletivo/form";
     }
-    @PostMapping("listagemperiodos")
+    @PostMapping("**/salvarperiodo")
     public String cadastrarPeriodoLetivo(Model model, PeriodoLetivo periodoLetivo){
-        periodoRepository.save(periodoLetivo);
-        model.addAttribute("periodos", periodoRepository.findAll());
-        return "periodoletivo/listagem";
+        periodoService.cadastrarPeriodo(periodoLetivo);
+        return "redirect:/matexpress/periodoletivo/listarperiodos";
     }
+    @GetMapping("**/listarperiodos")
+    public ModelAndView listarPeriodos(ModelAndView modelAndView){
+        modelAndView.setViewName("periodoletivo/listagem");
+        return modelAndView;
+    }
+
+    @ModelAttribute("periodos")
+    public List<PeriodoLetivo> periodoLetivos(){
+        return  periodoService.listarPeriodos();
+    }
+
+    @GetMapping("/editarperiodo/{idPeriodo}")
+    public ModelAndView editarPeriodo(ModelAndView modelAndView, @PathVariable("idPeriodo") Long idPeriodo){
+        modelAndView.setViewName("periodoletivo/form");
+        modelAndView.addObject("periodo", periodoService.pesquisarPeriodoPorId(idPeriodo));
+        return modelAndView;
+    }
+    @GetMapping("/removerperiodo/{idPeriodo}")
+    public String removerPeriodo(@PathVariable("idPeriodo") Long idPeriodo){
+        periodoService.deletarPorId(idPeriodo);
+        return "redirect:/matexpress/periodoletivo/listarperiodos";
+    }
+
 }
