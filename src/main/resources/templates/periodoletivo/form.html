@@ -1,24 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt_BR" xmlns:th="www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>MatExpress</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 <body>
-<h1>Formulário de Cadastro de Períodos</h1>
-<form th:action="@{salvarperiodo}" method="POST" th:object="${periodo}">
-    <input type="hidden" th:field="*{id}">
-    <label for="ano">Ano:</label>
-    <input type="number" id="ano" th:field="*{ano}"/><br>
-    <label for="periodo">Período</label>
-    <input type="number" id="periodo" th:field="*{periodo}"/><br>
-    <label for="inicio-periodo">Início do Período</label>
-    <input type="date" id="inicio-periodo" th:field="*{inicio}" th:value="${periodo.getInicio()}"/><br>
-    <label for="fim-periodo">Fim do Período</label>
-    <input type="date" id="fim-periodo" th:field="*{fim}" th:value="${periodo.getFim()}"/><br>
-    <input type="submit" value="Salvar"/>
-</form>
 
-<button><a th:href="@{listarperiodos}">Cancelar Cadastro</a></button>
+<nav class="navbar bg-light mb-3">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            MatExpress
+        </a>
+    </div>
+</nav>
+
+<div class="container-md justify-content-center">
+    <h3 class="mb-3">Cadastro de Período Letivo</h3>
+    <form th:action="@{salvarperiodo}" method="POST" th:object="${periodo}">
+        <input type="hidden" th:field="*{id}">
+        <label class="form-label" for="ano">Ano:</label>
+        <input type="number" id="ano" th:field="*{ano}" class="form-control"/><br>
+        <label class="form-label" for="periodo">Periodo:</label>
+        <input type="number" id="periodo" th:field="*{periodo}" class="form-control"/><br>
+        <label class="form-label" for="inicio-periodo">Inicio do Periodo:</label>
+        <input type="date" id="inicio-periodo" th:field="*{inicio}" class="form-control" th:value="${periodo.getInicio()}"/><br>
+        <label for="fim-periodo" class="form-label">Fim do Periodo:</label>
+        <input type="date" id="fim-periodo" th:field="*{fim}" class="form-control" th:value="${periodo.getFim()}"/><br>
+        <button type="submit" class="btn btn-primary mb-3">Salvar</button>
+    </form>
+    <a class="btn btn-danger" role="button" th:href="@{listarperiodos}">Cancelar Cadastro</a>
+
+</div>
 </body>
 </html>
