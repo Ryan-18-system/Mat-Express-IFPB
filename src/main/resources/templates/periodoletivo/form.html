@@ -15,7 +15,7 @@
     </div>
 </nav>
 
-<div class="container-fluid">
+<div class="container-md justify-content-center">
     <h3 class="mb-3">Cadastro de Período Letivo</h3>
     <form th:action="@{salvarperiodo}" method="POST" th:object="${periodo}">
         <input type="hidden" th:field="*{id}">
@@ -29,7 +29,7 @@
         <input type="date" id="fim-periodo" th:field="*{fim}" class="form-control" th:value="${periodo.getFim()}"/><br>
         <button type="submit" class="btn btn-primary mb-3">Salvar</button>
     </form>
-    <button class="btn btn-danger mt-3"><a th:href="@{listarperiodos}">Cancelar Cadastro</a></button>
+    <a class="btn btn-danger" role="button" th:href="@{listarperiodos}">Cancelar Cadastro</a>
 
 </div>
 </body>
