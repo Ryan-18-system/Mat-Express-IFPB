@@ -33,7 +33,7 @@ public class InstituicaoService {
             }
 
             this.instituicaoRepository.save(editInstituicao);
-            return "Instituição Editada com sucesso";
+            return "Instituição editada com sucesso";
         }
         newInstituicao.addPeriodo(newInstituicao.getPeriodoAtual());
         this.instituicaoRepository.save(newInstituicao);
@@ -60,8 +60,8 @@ public class InstituicaoService {
         Optional<Instituicao> instituicaoBanco = this.instituicaoRepository.findById(idInstituicao);
         if (instituicaoBanco.isPresent()) {
             this.instituicaoRepository.deleteById(idInstituicao);
-            return "Instituição deletado com sucesso";
+            return "Instituição deletada com sucesso";
         }
-        return "Instituição não encontrado, impossível deletar";
+        return "Instituição não encontrada, impossível deletar";
     }
 }

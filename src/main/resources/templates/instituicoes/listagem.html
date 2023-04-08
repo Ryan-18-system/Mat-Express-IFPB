@@ -6,14 +6,24 @@
     <title>Listagem de Instituições</title>
 </head>
 <body>
+
+<nav class="navbar bg-light mb-3">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            MatExpress
+        </a>
+    </div>
+</nav>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-9">
             <h3 class="mb-3">Listagem de Instituições </h3>
-            <h4 th:text="${mensagem}" style="color: seagreen"></h4>
+            <div th:text="${mensagem}" th:if="${mensagem ne null}" class="alert alert-success"></div>
+
         </div>
         <div class="col-3">
-            <a class="btn btn-primary" role="button" th:href="@{instituicoes/}">Cadastrar Nova instituição</a>
+            <a class="btn btn-primary" role="button" th:href="@{instituicoes/}">Cadastrar nova instituição</a>
         </div>
     </div>
 
@@ -24,7 +34,7 @@
             <tr>
                 <th>Nome</th>
                 <th>Sigla</th>
-                <th>telefone</th>
+                <th>Telefone</th>
                 <th>Período Atual</th>
                 <th>Quantidade de Períodos</th>
                 <th>Edição</th>
