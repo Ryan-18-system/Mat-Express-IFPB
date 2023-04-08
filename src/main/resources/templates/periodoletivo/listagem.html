@@ -41,8 +41,8 @@
             <tr th:each="periodo : ${periodos}">
                 <td th:text="${periodo.getAno()}"></td>
                 <td th:text="${periodo.getPeriodo()}"></td>
-                <td th:text="${periodo.getInicio()}"></td>
-                <td th:text="${periodo.getFim()}"></td>
+                <td th:text="${#temporals.format(periodo.getInicio(), 'dd/MM/yyyy')}"></td>
+                <td th:text="${#temporals.format(periodo.getFim(), 'dd/MM/yyyy')}"></td>
                 <td><a class="btn btn-secondary btn-sm" role="button" th:href="@{editarperiodo/{idPeriodo}(idPeriodo=${periodo.getId()})}">Editar Período</a></td>
                 <td><a class="btn btn-danger btn-sm" role="button" th:href="@{removerperiodo/{idPeriodo}(idPeriodo=${periodo.getId()})}">Remover Período</a></td>
             </tr>
