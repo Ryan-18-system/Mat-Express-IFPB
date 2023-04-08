@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MatExpress - Cadastro de Instituição</title>
+</head>
+<body>
+
+<h1>Cadastro da Instituição</h1>
+<form th:action="@{cadastrar}" method="post" th:object="${instituicao}">
+    <input type="hidden" th:field="*{id}"/><br>
+    <label for="nome">Nome</label>
+    <input type="text" id="nome" th:field="*{nome}"><br/> <br/>
+
+    <label for="sigla">Sigla</label>
+    <input id="sigla" type="text" maxlength="8" th:field="*{sigla}"/> <br/> <br/>
+    <hr>
+
+    <div th:if="${instituicao.periodos.size() == 0}">
+        <label for="periodos">Escolha o seu Período atual</label>
+        <select id="periodos" th:field="*{periodoAtual}">
+            <option th:each="pi : ${periodos}" th:value="${pi.id}"
+                    th:label="${'Período: '+pi.periodo + ' Duração: ' + pi.inicio + ' ~ '+ pi.fim }"></option>
+        </select>
+        <hr>
+    </div>
+
+    <div th:if="${instituicao.periodos.size() > 0}">
+        <label for="periodos-instituicao">Escolha o seu Período atual</label>
+        <select id="periodos-instituicao" th:field="*{periodoAtual}">
+            <option th:each="p : ${periodosDaInstituicao}" th:value="${p.id}"
+                    th:label="${'Período: '+p.periodo + ' Duração: ' + p.inicio + ' ~ '+ p.fim }"></option>
+        </select>
+        <hr>
+    </div>
+
+
+
+    <label for="telefone">Telefone</label>
+    <input id="telefone" type="text" th:field="*{telefone}"/> <br/> <br/>
+    <hr>
+    <input type="submit" value="Salvar"/>
+    <a th:href="@{/matexpress/instituicoes}">Cancelar</a>
+</form>
+</body>
+
+</html>
