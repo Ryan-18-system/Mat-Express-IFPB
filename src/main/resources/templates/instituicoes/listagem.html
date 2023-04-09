@@ -5,12 +5,12 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-9">
+        <div class="col-10">
             <h3 class="mb-3">Listagem de Instituições </h3>
             <div th:text="${mensagem}" th:if="${mensagem ne null}" class="alert alert-success"></div>
 
         </div>
-        <div class="col-3">
+        <div class="col-2">
             <a class="btn btn-primary" role="button" th:href="@{instituicoes/}">Cadastrar nova instituição</a>
         </div>
     </div>
