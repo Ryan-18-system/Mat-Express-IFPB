@@ -1,20 +1,23 @@
-<!DOCTYPE html>
-<head th:replace="~{/fragments/base :: headfiles}"></head>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
-<div th:replace="~{/fragments/base :: navlinks}" />
-
-<div class="container-md justify-content-center">
-    <h3 class="mb-3">Cadastro de Período Letivo</h3>
-    <form th:action="@{salvarperiodo}" method="POST" th:object="${periodo}">
+<body>
+<div layout:fragment="content">
+    <h4 class="mb-3">Cadastro de Período Letivo</h4>
+    <form th:action="@{salvarperiodo}" method="POST" th:object="${periodoLetivo}">
         <input type="hidden" th:field="*{id}">
         <label class="form-label" for="ano">Ano:</label>
-        <input type="number" id="ano" th:field="*{ano}" class="form-control"/><br>
+        <input type="number" id="ano" th:field="*{ano}" class="form-control" th:errorclass="is-invalid"/>
+        <div class="invalid-feedback" th:errors="*{ano}"></div><br>
         <label class="form-label" for="periodo">Periodo:</label>
-        <input type="number" id="periodo" th:field="*{periodo}" class="form-control"/><br>
+        <input type="number" id="periodo" th:field="*{periodo}" class="form-control" th:errorclass="is-invalid"/>
+        <div class="invalid-feedback" th:errors="*{periodo}"></div><br>
         <label class="form-label" for="inicio-periodo">Inicio do Periodo:</label>
-        <input type="date" id="inicio-periodo" th:field="*{inicio}" class="form-control" th:value="${periodo.getInicio()}"/><br>
+        <input type="date" id="inicio-periodo" th:field="*{inicio}" class="form-control" th:errorclass="is-invalid" th:value="${periodoLetivo.getInicio()}"/>
+        <div class="invalid-feedback" th:errors="*{inicio}"></div><br>
         <label for="fim-periodo" class="form-label">Fim do Periodo:</label>
-        <input type="date" id="fim-periodo" th:field="*{fim}" class="form-control" th:value="${periodo.getFim()}"/><br>
+        <input type="date" id="fim-periodo" th:field="*{fim}" class="form-control" th:errorclass="is-invalid" th:value="${periodoLetivo.getFim()}"/>
+        <div class="invalid-feedback" th:errors="*{fim}"></div><br>
+
         <button type="submit" class="btn btn-primary mb-3">Salvar</button>
     </form>
     <a class="btn btn-danger" role="button" th:href="@{listarperiodos}">Cancelar Cadastro</a>

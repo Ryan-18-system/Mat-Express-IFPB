@@ -20,7 +20,6 @@ public class PeriodoService {
 
     @Transactional
     public void cadastrarPeriodo(PeriodoLetivo newPeriodo) {
-        validarForm(newPeriodo);
         this.periodoRepository.save(newPeriodo);
     }
 
@@ -37,12 +36,4 @@ public class PeriodoService {
         this.periodoRepository.delete(periodoBanco);
     }
 
-    private void validarForm(PeriodoLetivo periodo) {
-        if (periodo.getPeriodo() == null || periodo.getInicio() == null || periodo.getFim() == null || periodo.getAno() == null) {
-            throw new IllegalArgumentException("Campos não podem ser nulos");
-        }
-        else if (periodo.getInicio().isAfter(periodo.getFim())) {
-            throw new IllegalArgumentException("Data inválida");
-        }
-    }
 }

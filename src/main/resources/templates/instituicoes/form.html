@@ -4,39 +4,39 @@
 <body>
 <div th:replace="~{/fragments/base :: navlinks}" />
 
-<div class="container-md justify-content-center">
-<h3 class="mb-3">Cadastro da Instituição</h3>
-<form th:action="@{cadastrar}" method="post" th:object="${instituicao}">
-    <input type="hidden" th:field="*{id}"/>
-    <label class="form-label" for="nome">Nome</label>
-    <input class="form-control" type="text" id="nome" th:field="*{nome}"><br>
+<div class="container">
+    <h4 class="mb-3">Cadastro da Instituição</h4>
+    <form th:action="@{cadastrar}" method="post" th:object="${instituicao}">
+        <input type="hidden" th:field="*{id}"/>
+        <label class="form-label" for="nome">Nome</label>
+        <input class="form-control" type="text" id="nome" th:field="*{nome}"><br>
 
-    <label class="form-label" for="sigla">Sigla</label>
-    <input class="form-control" id="sigla" type="text" maxlength="8" th:field="*{sigla}"/><br>
-    <hr>
-
-    <div th:if="${instituicao.periodos.size() == 0}">
-        <label class="form-label" for="periodos">Escolha o seu período atual</label>
-        <select class="form-select" id="periodos" th:field="*{periodoAtual}">
-            <option th:each="pi : ${periodos}" th:value="${pi.id}"
-                    th:label="${'Período: '+pi.periodo + ' | Duração: ' + pi.inicio + ' ~ '+ pi.fim }"></option>
-        </select>
+        <label class="form-label" for="sigla">Sigla</label>
+        <input class="form-control" id="sigla" type="text" maxlength="8" th:field="*{sigla}"/><br>
         <hr>
-    </div>
 
-    <div th:if="${instituicao.periodos.size() > 0}">
-        <label class="form-label" for="periodos-instituicao">Escolha o seu período atual</label>
-        <select class="form-select" id="periodos-instituicao" th:field="*{periodoAtual}">
-            <option th:each="p : ${periodosDaInstituicao}" th:value="${p.id}"
-                    th:label="${'Período: '+p.periodo + ' | Duração: ' + p.inicio + ' ~ '+ p.fim }"></option>
-        </select>
-        <hr>
-    </div>
-    <br>
-    <label class="form-label" for="telefone">Telefone</label>
-    <input class="form-control" id="telefone" type="text" th:field="*{telefone}"/><br>
-    <button type="submit" class="btn btn-primary mb-3">Salvar</button>
-</form>
+        <div th:if="${instituicao.periodos.size() == 0}">
+            <label class="form-label" for="periodos">Escolha o seu período atual</label>
+            <select class="form-select" id="periodos" th:field="*{periodoAtual}">
+                <option th:each="pi : ${periodos}" th:value="${pi.id}"
+                        th:label="${'Período: '+pi.periodo + ' | Duração: ' + pi.inicio + ' ~ '+ pi.fim }"></option>
+            </select>
+            <hr>
+        </div>
+
+        <div th:if="${instituicao.periodos.size() > 0}">
+            <label class="form-label" for="periodos-instituicao">Escolha o seu período atual</label>
+            <select class="form-select" id="periodos-instituicao" th:field="*{periodoAtual}">
+                <option th:each="p : ${periodosDaInstituicao}" th:value="${p.id}"
+                        th:label="${'Período: '+p.periodo + ' | Duração: ' + p.inicio + ' ~ '+ p.fim }"></option>
+            </select>
+            <hr>
+        </div>
+        <br>
+        <label class="form-label" for="telefone">Telefone</label>
+        <input class="form-control" id="telefone" type="text" th:field="*{telefone}"/><br>
+        <button type="submit" class="btn btn-primary mb-3">Salvar</button>
+    </form>
     <a class="btn btn-danger" role="button" th:href="@{/matexpress/instituicoes}">Cancelar</a>
 
 </div>

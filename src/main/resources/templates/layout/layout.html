@@ -1,0 +1,22 @@
+<!doctype>
+<html lang="pt_BR" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+
+<head>
+    <meta th:insert="~{/fragments/base :: headfiles}">
+</head>
+
+<body>
+
+<div th:replace="~{/fragments/base :: navlinks}" />
+
+<div class="container">
+
+    <div layout:fragment="content">
+                <!-- Conteúdo do template entra aqui -->
+        <h1>Conteúdo do template</h1>
+    </div>
+
+</div>
+</body>
+
+</html>
