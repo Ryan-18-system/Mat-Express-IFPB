@@ -20,15 +20,11 @@ public class Estudante {
     private String nome;
     private String matricula;
 
-    @OneToMany
-    @JoinColumn(name = "estudante_id")
-    private List<Instituicao> instituicoes = new ArrayList<>();
+
 
     @OneToOne
     @JoinColumn(name = "instituicao_atual_id")
     private Instituicao instituicaoAtual;
 
-    public void addInstituicao(Instituicao newInstituicao){
-        this.instituicoes.add(newInstituicao);
-    }
+
 }

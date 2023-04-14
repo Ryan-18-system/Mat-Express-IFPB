@@ -4,6 +4,7 @@ import br.edu.ifpb.matexpress.model.entities.Estudante;
 import br.edu.ifpb.matexpress.model.entities.Instituicao;
 import br.edu.ifpb.matexpress.model.entities.PeriodoLetivo;
 import br.edu.ifpb.matexpress.model.services.EstudanteService;
+import br.edu.ifpb.matexpress.model.services.InstituicaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,9 @@ import java.util.List;
 public class EstudanteController {
     @Autowired
     private EstudanteService estudanteService;
+
+    @Autowired
+    private InstituicaoService instituicaoService;
     String mensagem;
 
 
@@ -50,7 +54,7 @@ public class EstudanteController {
     ) {
         List<Instituicao> instituicoes = new ArrayList<>();
         instituicoes.addAll(this.estudanteService.listarInstituicoesCadastradas());
-        instituicoes.addAll(this.estudanteService.listarInstituicaoEstudante(idEstudante));
+        instituicoes.addAll(this.instituicaoService.listarInstituicoes());
         modelAndView.setViewName("estudantes/form");
         modelAndView.addObject("estudante", estudanteService.pesquisarPorId(idEstudante));
         modelAndView.addObject("instituicoes", instituicoes);

@@ -14,7 +14,5 @@ public interface InstituicaoRepository extends JpaRepository<Instituicao,Long> {
 
     Optional<Instituicao> getInstituicaoBySiglaEquals(String sigla);
 
-    @Query(value="select * from tb_instituicao where  estudante_id = :id ",nativeQuery = true)
-    List<Instituicao> listarInstituicaoEstudante(Long id);
 
 }

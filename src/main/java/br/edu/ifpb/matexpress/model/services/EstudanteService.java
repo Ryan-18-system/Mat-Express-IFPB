@@ -29,9 +29,6 @@ public class EstudanteService {
             editEstudante.setNome(newEstudante.getNome());
             editEstudante.setMatricula(newEstudante.getMatricula());
             editEstudante.setInstituicaoAtual(newEstudante.getInstituicaoAtual());
-            if(!editEstudante.getInstituicoes().contains(newEstudante.getInstituicaoAtual())){
-                editEstudante.addInstituicao(newEstudante.getInstituicaoAtual());
-            }
 
             this.estudanteRepository.save(editEstudante);
             return "Estudante editado com sucesso";
@@ -48,10 +45,7 @@ public class EstudanteService {
         return this.instituicaoRepository.findAll();
     }
 
-    //dúvida se aqui é um array
-    public List<Instituicao> listarInstituicaoEstudante(Long idEstudante){
-        return this.instituicaoRepository.listarInstituicaoEstudante(idEstudante);
-    };
+
 
     public Estudante pesquisarPorId(Long idEstudante) {
         Optional<Estudante> estudanteOptional = this.estudanteRepository.findById(idEstudante);
