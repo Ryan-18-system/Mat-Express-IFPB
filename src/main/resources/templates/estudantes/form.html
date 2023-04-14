@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<head th:replace="~{/fragments/base :: headfiles}"></head>
+
+<body>
+<div th:replace="~{/fragments/base :: navlinks}" />
+
+<div class="container-md justify-content-center">
+    <h3 class="mb-3">Cadastro de Estudantes</h3>
+    <form th:action="@{cadastrar}" method="post" th:object="${estudante}">
+        <input type="hidden" th:field="*{id}"/>
+        <label class="form-label" for="nome">Nome</label>
+        <input class="form-control" type="text" id="nome" th:field="*{nome}"><br>
+
+        <label class="form-label" for="matricula">Matricula</label>
+        <input class="form-control" id="matricula" type="text" th:field="*{matricula}"/><br>
+
+        <div>
+            <label class="form-label" for="instituicoes">Escolha sua Instituição</label>
+            <select class="form-select" id="instituicoes" th:field="*{instituicaoAtual}">
+                <option th:each="insti : ${instituicoes}" th:value="${insti.id}"
+                        th:label="${insti.getSigla()}"></option>
+            </select>
+        </div>
+
+        <br>
+        <button type="submit" class="btn btn-primary mb-3">Salvar</button>
+    </form>
+    <a class="btn btn-danger" role="button" th:href="@{/matexpress/estudantes}">Cancelar</a>
+
+</div>
+</body>
+
+</html>
