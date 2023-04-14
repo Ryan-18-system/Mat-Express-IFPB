@@ -1,15 +1,13 @@
-<!DOCTYPE html>
-<head th:replace="~{/fragments/base :: headfiles}"></head>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
-<div th:replace="~{/fragments/base :: navlinks}" />
-
-<div class="container-fluid">
-    <div class="row">
+<body>
+<div layout:fragment="content">
+    <div class="row mb-3">
         <div class="col-9">
-            <h3 class="mb-3">Listagem de Períodos </h3>
+            <h4>Listagem de períodos</h4>
         </div>
         <div class="col-3">
-            <a class="btn btn-primary" role="button" th:href="@{form}">Cadastrar Novo período</a>
+            <a class="btn btn-primary" role="button" th:href="@{form}">Cadastrar novo período</a>
         </div>
     </div>
 
@@ -32,8 +30,12 @@
                 <td th:text="${periodo.getPeriodo()}"></td>
                 <td th:text="${#temporals.format(periodo.getInicio(), 'dd/MM/yyyy')}"></td>
                 <td th:text="${#temporals.format(periodo.getFim(), 'dd/MM/yyyy')}"></td>
-                <td><a class="btn btn-secondary btn-sm" role="button" th:href="@{editarperiodo/{idPeriodo}(idPeriodo=${periodo.getId()})}">Editar Período</a></td>
-                <td><a class="btn btn-danger btn-sm" role="button" th:href="@{removerperiodo/{idPeriodo}(idPeriodo=${periodo.getId()})}">Remover Período</a></td>
+                <td><a class="btn btn-secondary btn-md" role="button"
+                       th:href="@{editarperiodo/{idPeriodo}(idPeriodo=${periodo.getId()})}"><i class="bi bi-pencil-square"></i>
+                </a></td>
+                <td><a class="btn btn-danger btn-md" role="button"
+                       th:href="@{removerperiodo/{idPeriodo}(idPeriodo=${periodo.getId()})}"><i class="bi bi-trash"></i>
+                </a></td>
             </tr>
             </tbody>
         </table>

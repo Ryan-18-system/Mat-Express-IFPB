@@ -1,8 +1,10 @@
 package br.edu.ifpb.matexpress.model.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
 
@@ -21,14 +23,18 @@ public class PeriodoLetivo implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message="Campo obrigatório!")
     private Integer ano;
 
+    @NotNull(message="Campo obrigatório!")
     private Integer periodo;
 
-
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @NotNull(message="Campo obrigatório!")
     private LocalDate inicio;
 
-
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @NotNull(message="Campo obrigatório!")
     private LocalDate fim;
 
 }
