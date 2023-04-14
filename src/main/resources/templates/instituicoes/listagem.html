@@ -31,7 +31,8 @@
                 <td th:text="${insti.nome}"></td>
                 <td th:text="${insti.sigla.toUpperCase()}"></td>
                 <td th:text="${insti.telefone}"></td>
-                <td th:text="${'Período: ' + insti.periodoAtual.periodo + ' - Duração: ' + insti.periodoAtual.inicio + ' ~ ' + insti.periodoAtual.fim}"></td>
+                <td th:if="${insti.periodoAtual != null}" th:text="${'Período: ' + insti.periodoAtual.periodo + ' - Duração: ' + insti.periodoAtual.inicio + ' ~ ' + insti.periodoAtual.fim}"></td>
+                <td th:if="${insti.periodoAtual == null}" th:text="${'Não existe período atual nessa instituição'}"></td>
                 <td th:text="${insti.getPeriodos().size()}"></td>
                 <td><a class="btn btn-secondary btn-md" role="button"
                        th:href="@{instituicoes/editarinstituicao/{idInstituicao}(idInstituicao=${insti.getId()})}"><i class="bi bi-pencil-square"></i>
