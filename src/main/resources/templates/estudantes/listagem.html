@@ -25,6 +25,7 @@
                 <th>Instituição</th>
                 <th>Edição</th>
                 <th>Exclusão</th>
+                <th>Nova Declaração</th>
             </tr>
             </thead>
             <tbody>
@@ -36,6 +37,8 @@
                        th:href="@{estudantes/editarestudante/{idEstudante}(idEstudante=${estud.getId()})}"><i class="bi bi-pencil-square"></i></a></td>
                 <td><a class="btn btn-danger btn-sm" role="button"
                        th:href="@{estudantes/removerestudante/{idEstudante}(idEstudante=${estud.getId()})}"><i class="bi bi-trash"></i></a></td>
+                <td><a class="btn btn-primary btn-sm" role="button"
+                       th:href="@{declaracoes/{id}(id=${estud.getId()})}"><i class="bi bi-journal-text"></i></a></td>
             </tr>
             </tbody>
         </table>
