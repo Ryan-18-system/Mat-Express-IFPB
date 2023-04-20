@@ -16,7 +16,7 @@
             <label class="form-label" for="periodos">Escolha o seu período atual</label>
             <select class="form-select" id="periodos" th:field="*{periodoAtual}">
                 <option th:each="pi : ${periodos}" th:value="${pi.id}"
-                        th:label="${'Período: '+pi.periodo + ' | Duração: ' + pi.inicio + ' ~ '+ pi.fim }"></option>
+                        th:text="${'Período: '+pi.periodo + ' | Duração: ' + pi.inicio + ' ~ '+ pi.fim }"></option>
             </select>
             <hr>
         </div>
@@ -25,7 +25,7 @@
             <label class="form-label" for="periodos-instituicao">Escolha o seu período atual</label>
             <select class="form-select" id="periodos-instituicao" th:field="*{periodoAtual}">
                 <option th:each="p : ${periodosDaInstituicao}" th:value="${p.id}"
-                        th:label="${'Período: '+p.periodo + ' | Duração: ' + p.inicio + ' ~ '+ p.fim }"></option>
+                        th:text="${'Período: '+p.periodo + ' | Duração: ' + p.inicio + ' ~ '+ p.fim }"></option>
             </select>
             <hr>
         </div>

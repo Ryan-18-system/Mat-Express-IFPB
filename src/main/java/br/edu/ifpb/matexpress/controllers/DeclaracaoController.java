@@ -31,11 +31,9 @@ public class DeclaracaoController {
     @Autowired
     private EstudanteService estudanteService;
 
-
-
     @GetMapping()
     public ModelAndView homeDeclaracoes(ModelAndView modelAndView){
-        modelAndView.setViewName("declaracoes/home-declaracoes");
+        modelAndView.setViewName("declaracoes/listagem");
         return  modelAndView;
     }
 

@@ -15,7 +15,7 @@
             <label class="form-label" for="instituicoes">Escolha sua Instituição</label>
             <select class="form-select" id="instituicoes" th:field="*{instituicaoAtual}">
                 <option th:each="insti : ${instituicoes}" th:value="${insti.id}"
-                        th:label="${insti.getSigla()}"></option>
+                        th:text="${insti.getSigla()}"></option>
             </select>
         </div>
 
