@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<head th:replace="~{/fragments/base :: headfiles}"></head>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
-<div th:replace="~{/fragments/base :: navlinks}" />
-
-<div class="container">
+<body>
+<div layout:fragment="content">
     <div class="row">
         <div class="col-9">
-            <h3 class="mb-3">Listagem de Estudantes </h3>
+            <h4 class="mb-3">Listagem de Estudantes </h4>
             <div th:text="${mensagem}" th:if="${mensagem ne null}" class="alert alert-success"></div>
 
         </div>

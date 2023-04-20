@@ -1,8 +1,7 @@
-<!DOCTYPE html>
-<head th:replace="~{/fragments/base :: headfiles}"></head>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
-<div th:replace="~{/fragments/base :: navlinks}" />
 <body>
+<div layout:fragment="content">
 <form th:action="@{salvar}" method="post" th:object="${declaracao}">
 
     <input type="hidden" th:field="*{id}"/>
@@ -30,10 +29,10 @@
                 th:label="${'Período: '+pi.periodo }"></option>
     </select>
 
-
-    <button type="submit">Submit</button>
+    <br>
+    <button type="submit" class="btn btn-primary mb-3">Gerar declaração</button>
 </form>
 
-</form>
+</div>
 </body>
 </html>
