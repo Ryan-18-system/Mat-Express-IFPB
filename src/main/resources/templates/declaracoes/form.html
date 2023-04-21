@@ -15,16 +15,16 @@
     <textarea class="form-control" id="observacoes" type="text" th:field="*{observacoes}"></textarea><br>
 
     <label class="form-label" for="estudante">Estudante</label>
-    <select class="form-select" id="estudante" th:field="*{titular}" disabled>
+    <select class="form-select" id="estudante" th:field="*{titular}">
         <option  th:value="${estudantePesquisado.id}"
-                th:text="${estudantePesquisado.nome }" ></option>
+                th:text="${estudantePesquisado.nome}" ></option>
     </select>
 
     <label class="form-label" for="instituicao">Instituição</label>
     <input class="form-control" id="instituicao" th:value="${instituicao.sigla}" disabled>
 
     <label class="form-label" for="periodos">Escolha o seu período</label>
-    <select class="form-select" id="periodos" th:field="*{periodoLetivo}" disabled>
+    <select class="form-select" id="periodos" th:field="*{periodoLetivo}">
         <option th:each="pi : ${periodos}" th:value="${pi.id}"
                 th:text="${'Período: '+pi.periodo }"></option>
     </select>

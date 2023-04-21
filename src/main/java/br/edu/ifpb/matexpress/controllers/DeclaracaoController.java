@@ -9,6 +9,7 @@ import br.edu.ifpb.matexpress.model.services.DeclaracaoService;
 import br.edu.ifpb.matexpress.model.services.EstudanteService;
 import br.edu.ifpb.matexpress.model.services.InstituicaoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,12 +38,10 @@ public class DeclaracaoController {
         return  modelAndView;
     }
 
-
     @PostMapping("salvar")
-    public  ModelAndView cadastrarDeclaracao(ModelAndView modelAndView, Declaracao declaracao,RedirectAttributes redirectAttributes){
-        modelAndView.setViewName("redirect:/matexpress/declaracoes");
-        declaracaoService.novaDeclaracao(declaracao);
-        return modelAndView;
+    public ResponseEntity<byte[]> cadastrarDeclaracao(Declaracao declaracao){
+        return  declaracaoService.novaDeclaracao(declaracao);
+
     }
 
     @GetMapping("/{id}")
