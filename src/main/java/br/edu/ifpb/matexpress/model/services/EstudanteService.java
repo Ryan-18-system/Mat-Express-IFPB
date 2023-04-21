@@ -1,5 +1,6 @@
 package br.edu.ifpb.matexpress.model.services;
 
+import br.edu.ifpb.matexpress.model.entities.Declaracao;
 import br.edu.ifpb.matexpress.model.entities.Estudante;
 import br.edu.ifpb.matexpress.model.entities.Instituicao;
 import br.edu.ifpb.matexpress.model.entities.PeriodoLetivo;
@@ -44,7 +45,6 @@ public class EstudanteService {
     public List<Instituicao> listarInstituicoesCadastradas() {
         return this.instituicaoRepository.findAll();
     }
-
 
 
     public Estudante pesquisarPorId(Long idEstudante) {

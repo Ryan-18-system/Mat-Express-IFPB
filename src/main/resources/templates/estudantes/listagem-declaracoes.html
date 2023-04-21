@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<body>
+<div layout:fragment="content">
+    <h1>Listagem de Declarações</h1>
+    <table>
+        <tr>
+            <th>Instituição</th>
+            <th>Recebimento</th>
+            <th>Vencimento</th>
+            <th>Atual</th>
+            <th>Observações</th>
+            <th>Gerar PDF</th>
+        </tr>
+        <tr th:each="dec : ${declaracoes}">
+            <td th:text="${dec.titular.getInstituicaoAtual().nome}"></td>
+            <td th:text="${dec.getDataRecebimento()}"></td>
+            <td th:text="${dec.getDataVencimento()}"></td>
+            <td th:text="${dec.getDeclaracaoAtual()} ? 'Sim' : 'Não'"></td>
+            <td th:text="${dec.observacoes}" th:maxlength="25"></td>
+            <td><a class="btn btn-primary btn-sm" role="button"
+                   th:href="@{/matexpress/declaracoes/gerar-pdf/{id}(id=${dec.getId()})}"><i class="bi bi-list-ul"></i></a></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

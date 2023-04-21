@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<head th:replace="~{/fragments/base :: headfiles}"></head>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
-<div th:replace="~{/fragments/base :: navlinks}" />
-
-<div class="container">
+<body>
+<div layout:fragment="content">
     <div class="row">
         <div class="col-9">
-            <h3 class="mb-3">Listagem de Estudantes </h3>
+            <h4 class="mb-3">Listagem de Estudantes </h4>
             <div th:text="${mensagem}" th:if="${mensagem ne null}" class="alert alert-success"></div>
 
         </div>
@@ -25,6 +23,8 @@
                 <th>Instituição</th>
                 <th>Edição</th>
                 <th>Exclusão</th>
+                <th>Nova Declaração</th>
+                <th>Listar Declaracoes</th>
             </tr>
             </thead>
             <tbody>
@@ -36,6 +36,10 @@
                        th:href="@{estudantes/editarestudante/{idEstudante}(idEstudante=${estud.getId()})}"><i class="bi bi-pencil-square"></i></a></td>
                 <td><a class="btn btn-danger btn-sm" role="button"
                        th:href="@{estudantes/removerestudante/{idEstudante}(idEstudante=${estud.getId()})}"><i class="bi bi-trash"></i></a></td>
+                <td><a class="btn btn-primary btn-sm" role="button"
+                       th:href="@{declaracoes/{id}(id=${estud.getId()})}"><i class="bi bi-journal-text"></i></a></td>
+                <td><a class="btn btn-primary btn-sm" role="button"
+                       th:href="@{estudantes/declaracoes/{id}(id=${estud.getId()})}"><i class="bi bi-list-ul"></i></a></td>
             </tr>
             </tbody>
         </table>

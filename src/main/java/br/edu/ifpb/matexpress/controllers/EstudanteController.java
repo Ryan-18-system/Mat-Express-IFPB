@@ -1,5 +1,6 @@
 package br.edu.ifpb.matexpress.controllers;
 
+import br.edu.ifpb.matexpress.model.entities.Declaracao;
 import br.edu.ifpb.matexpress.model.entities.Estudante;
 import br.edu.ifpb.matexpress.model.entities.Instituicao;
 import br.edu.ifpb.matexpress.model.entities.PeriodoLetivo;
@@ -25,7 +26,12 @@ public class EstudanteController {
     private InstituicaoService instituicaoService;
     String mensagem;
 
-
+    @GetMapping("/declaracoes/{id}")
+    public ModelAndView declaracoes(ModelAndView modelAndView,@PathVariable("id") Long id){
+        modelAndView.setViewName("estudantes/listagem-declaracoes");
+        modelAndView.addObject("declaracoes", this.declaracoes(id));
+        return modelAndView;
+    }
     @GetMapping("/")
     public ModelAndView formEstudantes(Estudante estudante, ModelAndView modelAndView) {
         modelAndView.setViewName("estudantes/form");
@@ -44,7 +50,6 @@ public class EstudanteController {
     @GetMapping("")
     public ModelAndView listarEstudantes(ModelAndView modelAndView) {
         modelAndView.setViewName("estudantes/listagem");
-        modelAndView.addObject("estudantes", this.estudanteService.listarEstudantes());
         return modelAndView;
     }
 
@@ -74,5 +79,16 @@ public class EstudanteController {
     @ModelAttribute("instituicoes")
     public List<Instituicao> instituicoes() {
         return this.estudanteService.listarInstituicoesCadastradas();
+    }
+
+    @ModelAttribute("estudantes")
+    public List<Estudante> esttudantes() {
+        return this.estudanteService.listarEstudantes();
+    }
+
+
+    public List<Declaracao> declaracoes(Long idEstudante) {
+        Estudante ePesquisado = this.estudanteService.pesquisarPorId(idEstudante);
+        return  ePesquisado.getDeclaracoes();
     }
 }

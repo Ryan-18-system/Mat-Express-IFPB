@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "estudante")
+@Table(name = "tb_estudante")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,11 +20,11 @@ public class Estudante {
     private String nome;
     private String matricula;
 
-
-
     @OneToOne
     @JoinColumn(name = "instituicao_atual_id")
     private Instituicao instituicaoAtual;
 
+    @OneToMany(mappedBy = "titular", cascade = CascadeType.ALL)
+    private List<Declaracao> declaracoes = new ArrayList<>();
 
 }

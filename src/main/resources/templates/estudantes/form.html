@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<head th:replace="~{/fragments/base :: headfiles}"></head>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
 <body>
-<div th:replace="~{/fragments/base :: navlinks}" />
-
-<div class="container-md justify-content-center">
-    <h3 class="mb-3">Cadastro de Estudantes</h3>
+<div layout:fragment="content">
+    <h4 class="mb-3">Cadastro de Estudantes</h4>
     <form th:action="@{cadastrar}" method="post" th:object="${estudante}">
         <input type="hidden" th:field="*{id}"/>
         <label class="form-label" for="nome">Nome</label>
@@ -18,7 +15,7 @@
             <label class="form-label" for="instituicoes">Escolha sua Instituição</label>
             <select class="form-select" id="instituicoes" th:field="*{instituicaoAtual}">
                 <option th:each="insti : ${instituicoes}" th:value="${insti.id}"
-                        th:label="${insti.getSigla()}"></option>
+                        th:text="${insti.getSigla()}"></option>
             </select>
         </div>
 

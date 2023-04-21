@@ -1,0 +1,38 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
+<body>
+<div layout:fragment="content">
+<form th:action="@{salvar}" method="post" th:object="${declaracao}">
+
+    <input type="hidden" th:field="*{id}"/>
+    <label class="form-label" for="dataRecebimento">Data Recebimento</label>
+    <input class="form-control" type="date" id="dataRecebimento" th:field="*{dataRecebimento}"><br>
+
+    <label class="form-label" for="dataVencimento">Data Vencimento</label>
+    <input class="form-control" id="dataVencimento" type="date" th:field="*{dataVencimento}"/><br>
+
+    <label class="form-label" for="observacoes">Observações</label>
+    <textarea class="form-control" id="observacoes" type="text" th:field="*{observacoes}"></textarea><br>
+
+    <label class="form-label" for="estudante">Estudante</label>
+    <select class="form-select" id="estudante" th:field="*{titular}">
+        <option  th:value="${estudantePesquisado.id}"
+                th:text="${estudantePesquisado.nome}" ></option>
+    </select>
+
+    <label class="form-label" for="instituicao">Instituição</label>
+    <input class="form-control" id="instituicao" th:value="${instituicao.sigla}" disabled>
+
+    <label class="form-label" for="periodos">Escolha o seu período</label>
+    <select class="form-select" id="periodos" th:field="*{periodoLetivo}">
+        <option th:each="pi : ${periodos}" th:value="${pi.id}"
+                th:text="${'Período: '+pi.periodo }"></option>
+    </select>
+
+    <br>
+    <button type="submit" class="btn btn-primary mb-3">Cadastrar Declaração</button>
+</form>
+
+</div>
+</body>
+</html>
