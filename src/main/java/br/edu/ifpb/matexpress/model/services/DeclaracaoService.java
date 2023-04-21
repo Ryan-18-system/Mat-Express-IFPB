@@ -3,6 +3,7 @@ package br.edu.ifpb.matexpress.model.services;
 
 import br.edu.ifpb.matexpress.model.entities.Declaracao;
 import br.edu.ifpb.matexpress.model.repositories.DeclaracaoRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -11,15 +12,24 @@ import com.itextpdf.text.pdf.PdfWriter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
+
 import java.io.ByteArrayOutputStream;
+import java.util.Optional;
+
 @Service
 public class DeclaracaoService {
     @Autowired
     private DeclaracaoRepository declaracaoRepository;
-
-    public ResponseEntity<byte[]> novaDeclaracao(Declaracao newDeclaracao){
+    @Transactional
+    public void novaDeclaracao(Declaracao newDeclaracao){
+        this.declaracaoRepository.atualizarTodasDeclaracoesAtualParaFalse();
         this.declaracaoRepository.save(newDeclaracao);
-        String declaracaoFormatada = this.formatadorDeMatricula(newDeclaracao);
+    }
+    @Transactional
+    public ResponseEntity<byte[]> gerarPdfPorId(Long id){
+        Optional<Declaracao> declaracaoPesquisada = this.declaracaoRepository.findById(id);
+        String declaracaoFormatada = this.formatadorDeMatricula(declaracaoPesquisada.get());
         return gerarDeclaracao(declaracaoFormatada);
     }
 

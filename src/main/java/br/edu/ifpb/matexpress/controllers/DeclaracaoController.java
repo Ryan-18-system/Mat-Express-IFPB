@@ -4,7 +4,6 @@ import br.edu.ifpb.matexpress.model.entities.Declaracao;
 import br.edu.ifpb.matexpress.model.entities.Estudante;
 import br.edu.ifpb.matexpress.model.entities.Instituicao;
 import br.edu.ifpb.matexpress.model.entities.PeriodoLetivo;
-import br.edu.ifpb.matexpress.model.repositories.DeclaracaoRepository;
 import br.edu.ifpb.matexpress.model.services.DeclaracaoService;
 import br.edu.ifpb.matexpress.model.services.EstudanteService;
 import br.edu.ifpb.matexpress.model.services.InstituicaoService;
@@ -16,8 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.util.List;
 
 @Controller
@@ -39,9 +36,14 @@ public class DeclaracaoController {
     }
 
     @PostMapping("salvar")
-    public ResponseEntity<byte[]> cadastrarDeclaracao(Declaracao declaracao){
-        return  declaracaoService.novaDeclaracao(declaracao);
-
+    public ModelAndView cadastrarDeclaracao(Declaracao declaracao, ModelAndView modelAndView){
+        modelAndView.setViewName("redirect:/matexpress/estudantes");
+        declaracaoService.novaDeclaracao(declaracao);
+        return modelAndView;
+    }
+    @GetMapping("gerar-pdf/{id}")
+    public ResponseEntity<byte[]> gerarPdf(@PathVariable("id") Long id){
+        return  this.declaracaoService.gerarPdfPorId(id);
     }
 
     @GetMapping("/{id}")
