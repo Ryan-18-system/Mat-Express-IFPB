@@ -42,7 +42,7 @@ public class DeclaracaoService {
                 .append("\nVálido de ").append(declaracao.getDataRecebimento()).append(" à ").append(declaracao.getDataVencimento());
         return  sb.toString();
     }
-    private ResponseEntity<byte[]> gerarDeclaracao(String declaracaoo) {
+    private ResponseEntity<byte[]> gerarDeclaracao(String declaracao) {
 
         Document document = new Document();
         ResponseEntity<byte[]> response = null;
@@ -57,7 +57,7 @@ public class DeclaracaoService {
             Chunk chunk = new Chunk("DECLARAÇÃO DE MATRÍCULA", titleFont);
             Chapter chapter = new Chapter(new Paragraph(chunk), 1);
             chapter.setNumberDepth(0);
-            chapter.add(new Paragraph(declaracaoo, paragraphFont));
+            chapter.add(new Paragraph(declaracao, paragraphFont));
             document.add(chapter);
             document.close();
 
