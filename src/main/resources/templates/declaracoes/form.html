@@ -19,10 +19,10 @@
         <option  th:value="${estudantePesquisado.id}"
                 th:text="${estudantePesquisado.nome}" ></option>
     </select>
-
+    <br>
     <label class="form-label" for="instituicao">Instituição</label>
     <input class="form-control" id="instituicao" th:value="${instituicao.sigla}" disabled>
-
+    <br>
     <label class="form-label" for="periodos">Escolha o seu período</label>
     <select class="form-select" id="periodos" th:field="*{periodoLetivo}">
         <option th:each="pi : ${periodos}" th:value="${pi.id}"
