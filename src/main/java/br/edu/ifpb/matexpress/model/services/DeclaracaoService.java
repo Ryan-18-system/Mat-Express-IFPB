@@ -12,7 +12,6 @@ import com.itextpdf.text.pdf.PdfWriter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Optional;
@@ -36,10 +35,11 @@ public class DeclaracaoService {
     private String formatadorDeMatricula(Declaracao declaracao){
         StringBuilder sb = new StringBuilder();
         sb.append("Declaramos para os fins que se fizerem necessários, e por nos haver sido solicitado,")
-                .append(" que ").append(declaracao.getTitular().getNome()).append(", matrícula ").append(declaracao.getTitular().getMatricula()).append(", é aluno regularmente matriculado")
+                .append(" que ").append(declaracao.getTitular().getNome()).append(", matrícula ").append(declaracao.getTitular().getMatricula()).append(", é aluno(a) regularmente matriculado(a)")
                 .append(" no ").append(declaracao.getPeriodoLetivo().getPeriodo()).append(" período da Instituição ").append(declaracao.getTitular().getInstituicaoAtual().getNome())
-                .append(", de nível de ensino graduação, desta Instituição de Ensino, no período letivo de ")
-                .append(declaracao.getPeriodoLetivo().getAno()).append(".").append(declaracao.getPeriodoLetivo().getPeriodo());
+                .append(", de nível de ensino graduação, no período letivo de ")
+                .append(declaracao.getPeriodoLetivo().getAno()).append(".").append(declaracao.getPeriodoLetivo().getPeriodo())
+                .append("\nVálido de ").append(declaracao.getDataRecebimento()).append(" à ").append(declaracao.getDataVencimento());
         return  sb.toString();
     }
     private ResponseEntity<byte[]> gerarDeclaracao(String declaracao) {

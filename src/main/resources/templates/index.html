@@ -1,0 +1,48 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:insert="~{layout/layout}" th:with="titulo='Home'">
+
+<body>
+<div layout:fragment="content">
+
+    <section>
+        <h2>Controle de declarações de estudantes.</h2>
+        <p>Aqui você pode cadastrar estudantes, instituições e declarações, bem como acompanhar as declarações dos estudantes.</p>
+    </section>
+
+
+    <div class="py-4">
+        <h3 class="pb-2">Benefícios do sistema</h3>
+
+        <div class="row row-cols-1 row-cols-lg-2 align-items-stretch g-4 py-4">
+            <div class="col">
+                <div class="card h-100 rounded-4">
+                    <div class="d-flex flex-column h-100 p-5 pb-3">
+                        <div class="feature-icon d-inline-flex justify-content-center fs-2 mb-3">
+                            <i class="bi bi-clock-history"></i>
+                        </div>
+                        <h4>Acompanhamento de Prazos de Expiração</h4>
+                        <p>O sistema permite o acompanhamento dos prazos de expiração das declarações e controle da validade das mesmas.</p>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card h-100 rounded-4">
+                    <div class="d-flex flex-column h-100 p-5 pb-3">
+                        <div class="feature-icon d-inline-flex justify-content-center fs-2 mb-3">
+                            <i class="bi bi-clipboard2-data"></i>
+                        </div>
+                        <h4>Geração de Relatórios (em breve)</h4>
+                        <p>O sistema oferece a geração de relatórios das declarações que estão vencidas ou que irão vencer em X dias, bem como de estudantes que não apresentaram declarações.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+</body>
+
+</html>
