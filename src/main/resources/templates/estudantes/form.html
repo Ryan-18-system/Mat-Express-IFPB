@@ -4,13 +4,14 @@
 <div layout:fragment="content">
     <h4 class="mb-3">Cadastro de Estudantes</h4>
     <form th:action="@{cadastrar}" method="post" th:object="${estudante}">
+        
         <input type="hidden" th:field="*{id}"/>
         <label class="form-label" for="nome">Nome</label>
-        <input class="form-control" type="text" id="nome" th:field="*{nome}"><br>
-
+        <input class="form-control" type="text" id="nome" th:field="*{nome}" th:errorclass="is-invalid">
+        <div class="invalid-feedback" th:errors="*{nome}"></div><br>
         <label class="form-label" for="matricula">Matricula</label>
-        <input class="form-control" id="matricula" type="text" th:field="*{matricula}"/><br>
-
+        <input class="form-control" id="matricula" type="text" th:field="*{matricula}" th:errorclass="is-invalid"/>
+        <div class="invalid-feedback" th:errors="*{matricula}"></div><br>
         <div>
             <label class="form-label" for="instituicoes">Escolha sua Instituição</label>
             <select class="form-select" id="instituicoes" th:field="*{instituicaoAtual}">
