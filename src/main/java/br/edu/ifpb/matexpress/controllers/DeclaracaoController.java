@@ -1,5 +1,18 @@
 package br.edu.ifpb.matexpress.controllers;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
 import br.edu.ifpb.matexpress.model.entities.Declaracao;
 import br.edu.ifpb.matexpress.model.entities.Estudante;
 import br.edu.ifpb.matexpress.model.entities.Instituicao;
@@ -7,15 +20,7 @@ import br.edu.ifpb.matexpress.model.entities.PeriodoLetivo;
 import br.edu.ifpb.matexpress.model.services.DeclaracaoService;
 import br.edu.ifpb.matexpress.model.services.EstudanteService;
 import br.edu.ifpb.matexpress.model.services.InstituicaoService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-import java.util.List;
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/declaracoes")
@@ -30,41 +35,46 @@ public class DeclaracaoController {
     private EstudanteService estudanteService;
 
     @GetMapping()
-    public ModelAndView homeDeclaracoes(ModelAndView modelAndView){
+    public ModelAndView homeDeclaracoes(ModelAndView modelAndView) {
         modelAndView.setViewName("declaracoes/listagem");
-        return  modelAndView;
+        return modelAndView;
     }
 
     @PostMapping("salvar")
-    public ModelAndView cadastrarDeclaracao(Declaracao declaracao, ModelAndView modelAndView){
-        modelAndView.setViewName("redirect:/matexpress/estudantes");
+    public ModelAndView cadastrarDeclaracao(@Valid Declaracao declaracao, BindingResult validation,
+            ModelAndView modelAndView) {
+        if (validation.hasErrors()) {
+            modelAndView.setViewName("declaracoes/form");
+            return modelAndView;
+        }
         declaracaoService.novaDeclaracao(declaracao);
+        modelAndView.setViewName("redirect:/matexpress/estudantes");
+
         return modelAndView;
     }
+
     @GetMapping("gerar-pdf/{id}")
-    public ResponseEntity<byte[]> gerarPdf(@PathVariable("id") Long id){
-        return  this.declaracaoService.gerarPdfPorId(id);
+    public ResponseEntity<byte[]> gerarPdf(@PathVariable("id") Long id) {
+        return this.declaracaoService.gerarPdfPorId(id);
     }
 
     @GetMapping("/{id}")
-    public ModelAndView formDeclaracoes(ModelAndView modelAndView, Declaracao declaracao, @PathVariable("id") Long id){
+    public ModelAndView formDeclaracoes(ModelAndView modelAndView, Declaracao declaracao, @PathVariable("id") Long id) {
         Estudante estudantePesquisado = this.getEstudante(id);
         Instituicao instituicao = estudantePesquisado.getInstituicaoAtual();
         modelAndView.setViewName("declaracoes/form");
         modelAndView.addObject("declaracao", declaracao);
-        modelAndView.addObject("estudantePesquisado",estudantePesquisado);
-        modelAndView.addObject("instituicao",instituicao);
+        modelAndView.addObject("estudantePesquisado", estudantePesquisado);
+        modelAndView.addObject("instituicao", instituicao);
         modelAndView.addObject("periodos", this.listarPeriodosDaIntituicao(instituicao.getId()));
-        return  modelAndView;
+        return modelAndView;
     }
 
-
-    private List<PeriodoLetivo> listarPeriodosDaIntituicao(Long id){
+    private List<PeriodoLetivo> listarPeriodosDaIntituicao(Long id) {
         return this.instituicaoService.listarPeriodosDaInstituicao(id);
     }
 
-    private Estudante getEstudante(Long id){
+    private Estudante getEstudante(Long id) {
         return this.estudanteService.pesquisarPorId(id);
     }
-
 }

@@ -2,17 +2,20 @@
 
 <body>
 <div layout:fragment="content">
-<form th:action="@{salvar}" method="post" th:object="${declaracao}">
+<form th:action="@{salvar}" method="POST" th:object="${declaracao}">
 
     <input type="hidden" th:field="*{id}"/>
     <label class="form-label" for="dataRecebimento">Data Recebimento</label>
-    <input class="form-control" type="date" id="dataRecebimento" th:field="*{dataRecebimento}"><br>
+    <input type="date" id="dataRecebimento" th:field="*{dataRecebimento}" class="form-control" th:errorclass="is-invalid"/>
+    <div class="invalid-feedback" th:errors="*{dataRecebimento}"></div><br>
 
     <label class="form-label" for="dataVencimento">Data Vencimento</label>
-    <input class="form-control" id="dataVencimento" type="date" th:field="*{dataVencimento}"/><br>
+    <input type="date" id="dataVencimento" th:field="*{dataVencimento}" class="form-control"  th:errorclass="is-invalid"/>
+    <div class="invalid-feedback" th:errors="*{dataVencimento}"></div><br>
 
     <label class="form-label" for="observacoes">Observações</label>
-    <textarea class="form-control" id="observacoes" type="text" th:field="*{observacoes}"></textarea><br>
+    <textarea id="observacoes" type="text" th:field="*{observacoes}" class="form-control" th:errorclass="is-invalid"></textarea>
+    <div class="invalid-feedback" th:errors="*{observacoes}"></div><br>
 
     <label class="form-label" for="estudante">Estudante</label>
     <select class="form-select" id="estudante" th:field="*{titular}">
