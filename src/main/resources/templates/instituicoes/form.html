@@ -6,10 +6,12 @@
     <form th:action="@{cadastrar}" method="post" th:object="${instituicao}">
         <input type="hidden" th:field="*{id}"/>
         <label class="form-label" for="nome">Nome</label>
-        <input class="form-control" type="text" id="nome" th:field="*{nome}"><br>
+        <input class="form-control" type="text" id="nome" th:field="*{nome}"th:errorclass="is-invalid">
+        <div class="invalid-feedback" th:errors="*{nome}"></div><br>
 
         <label class="form-label" for="sigla">Sigla</label>
-        <input class="form-control" id="sigla" type="text" maxlength="8" th:field="*{sigla}"/><br>
+        <input class="form-control" id="sigla" type="text" maxlength="8" th:field="*{sigla}"th:errorclass="is-invalid">
+        <div class="invalid-feedback" th:errors="*{sigla}"></div><br>
         <hr>
 
         <div th:if="${instituicao.periodos.size() == 0}">
@@ -31,7 +33,8 @@
         </div>
         <br>
         <label class="form-label" for="telefone">Telefone</label>
-        <input class="form-control" id="telefone" type="text" th:field="*{telefone}"/><br>
+        <input class="form-control" id="telefone" type="text" th:field="*{telefone}"th:errorclass="is-invalid">
+        <div class="invalid-feedback" th:errors="*{telefone}"></div><br>
         <button type="submit" class="btn btn-primary mb-3">Salvar</button>
     </form>
     <a class="btn btn-danger" role="button" th:href="@{/matexpress/instituicoes}">Cancelar</a>
