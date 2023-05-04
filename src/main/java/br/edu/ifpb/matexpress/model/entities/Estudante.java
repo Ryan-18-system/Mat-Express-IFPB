@@ -26,11 +26,11 @@ public class Estudante {
     @NotBlank(message="Campo obrigatório!")
     private String matricula;
 
-    @OneToOne
-    @JoinColumn(name = "instituicao_atual_id")
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "instituicao_atual_id",nullable = true)
     private Instituicao instituicaoAtual;
 
-    @OneToMany(mappedBy = "titular", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "titular", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Declaracao> declaracoes = new ArrayList<>();
 
 }

@@ -31,9 +31,10 @@ public class PeriodoService {
         Optional<PeriodoLetivo> periodoBanco = periodoRepository.findById(idPeriodo);
         return periodoBanco.orElseGet(periodoBanco::orElseThrow);
     }
-    public void deletarPorId(Long idPeriodo){
-        PeriodoLetivo periodoBanco = this.pesquisarPeriodoPorId(idPeriodo);
-        this.periodoRepository.delete(periodoBanco);
+    public void deletarPorId(Long idPeriodo) throws Exception{
+            PeriodoLetivo periodoBanco = this.pesquisarPeriodoPorId(idPeriodo);
+            this.periodoRepository.delete(periodoBanco);
+
     }
 
 }

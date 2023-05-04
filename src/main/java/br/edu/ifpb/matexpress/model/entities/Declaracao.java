@@ -22,8 +22,8 @@ public class Declaracao {
 
     private LocalDate dataVencimento;
 
-    @OneToOne
-    @JoinColumn(name = "periodo_id")
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "periodo_id", nullable = true)
     private PeriodoLetivo periodoLetivo;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE,CascadeType.PERSIST})

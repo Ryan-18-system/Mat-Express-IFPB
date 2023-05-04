@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -51,8 +52,13 @@ public class PeriodoController {
         return modelAndView;
     }
     @GetMapping("/removerperiodo/{idPeriodo}")
-    public String removerPeriodo(@PathVariable("idPeriodo") Long idPeriodo){
-        periodoService.deletarPorId(idPeriodo);
+    public String removerPeriodo(@PathVariable("idPeriodo") Long idPeriodo, Model model, RedirectAttributes redirectAttributes)  {
+        try{
+            periodoService.deletarPorId(idPeriodo);
+
+        }catch (Exception e ){
+            redirectAttributes.addFlashAttribute("message","Não foi possível deletar período, pois o mesmo está associado a uma Instituição");
+        }
         return "redirect:/matexpress/periodoletivo/listarperiodos";
     }
 
