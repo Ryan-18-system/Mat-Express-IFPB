@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifpb.matexpress.model.entities.Declaracao;
 import br.edu.ifpb.matexpress.model.entities.Estudante;
@@ -21,6 +22,7 @@ import br.edu.ifpb.matexpress.model.services.DeclaracaoService;
 import br.edu.ifpb.matexpress.model.services.EstudanteService;
 import br.edu.ifpb.matexpress.model.services.InstituicaoService;
 import jakarta.validation.Valid;
+import jakarta.validation.Validation;
 
 @Controller
 @RequestMapping("/declaracoes")
@@ -28,11 +30,14 @@ public class DeclaracaoController {
 
     @Autowired
     private DeclaracaoService declaracaoService;
+
     @Autowired
     private InstituicaoService instituicaoService;
 
     @Autowired
     private EstudanteService estudanteService;
+
+    String mensagem;
 
     @GetMapping()
     public ModelAndView homeDeclaracoes(ModelAndView modelAndView) {
@@ -44,7 +49,7 @@ public class DeclaracaoController {
     public ModelAndView cadastrarDeclaracao(@Valid Declaracao declaracao, BindingResult validation,
             ModelAndView modelAndView) {
         if (validation.hasErrors()) {
-            modelAndView.setViewName("declaracoes/form");
+            modelAndView.setViewName("redirect:/matexpress/declaracoes/" + declaracao.getId());
             return modelAndView;
         }
         declaracaoService.novaDeclaracao(declaracao);
