@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -21,23 +22,20 @@ public class InstituicaoService {
 
     @Transactional
     public String cadastrarInstituicao(Instituicao newInstituicao) {
-        Optional<Instituicao> instituicaoBanco = this.instituicaoRepository.getInstituicaoBySiglaEquals(newInstituicao.getSigla().toUpperCase());
-        if (instituicaoBanco.isPresent()) {
-            Instituicao editInstituicao = instituicaoBanco.get();
-            editInstituicao.setNome(newInstituicao.getNome());
-            editInstituicao.setTelefone(newInstituicao.getTelefone());
-            editInstituicao.setSigla(newInstituicao.getSigla());
-            editInstituicao.setPeriodoAtual(newInstituicao.getPeriodoAtual());
-            if(!editInstituicao.getPeriodos().contains(newInstituicao.getPeriodoAtual())){
-                editInstituicao.addPeriodo(newInstituicao.getPeriodoAtual());
-            }
-
-            this.instituicaoRepository.save(editInstituicao);
-            return "Instituição editada com sucesso";
+        if(Objects.isNull(newInstituicao.getId())){
+            instituicaoRepository.save(newInstituicao);
+            return "Instituição cadastrada com sucesso";
         }
-        newInstituicao.addPeriodo(newInstituicao.getPeriodoAtual());
-        this.instituicaoRepository.save(newInstituicao);
-        return "Instituição cadastrada com sucesso";
+        Optional<Instituicao> instituicaoBanco = this.instituicaoRepository.findById(newInstituicao.getId());
+       if(instituicaoBanco.isPresent()){
+           instituicaoBanco.get().setNome(newInstituicao.getNome());
+           instituicaoBanco.get().setSigla(newInstituicao.getSigla());
+           instituicaoBanco.get().setTelefone(newInstituicao.getTelefone());
+           instituicaoBanco.get().setPeriodoAtual(newInstituicao.getPeriodoAtual());
+           instituicaoRepository.save(instituicaoBanco.get());
+           return "Instituição editada com sucesso";
+       }
+       return "";
     }
 
     public List<Instituicao> listarInstituicoes() {

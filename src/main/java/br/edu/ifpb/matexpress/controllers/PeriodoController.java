@@ -1,5 +1,7 @@
 package br.edu.ifpb.matexpress.controllers;
 
+import br.edu.ifpb.matexpress.model.entities.Instituicao;
+import br.edu.ifpb.matexpress.model.services.InstituicaoService;
 import br.edu.ifpb.matexpress.model.services.PeriodoService;
 import br.edu.ifpb.matexpress.model.entities.PeriodoLetivo;
 import jakarta.validation.Valid;
@@ -18,6 +20,8 @@ import java.util.List;
 public class PeriodoController {
     @Autowired
     private PeriodoService periodoService;
+    @Autowired
+    private InstituicaoService instituicaoService;
     @GetMapping("/form")
     public String formPeriodo(PeriodoLetivo periodoLetivo, Model model){
         model.addAttribute("periodoLetivo", periodoLetivo);
@@ -43,6 +47,11 @@ public class PeriodoController {
     @ModelAttribute("periodos")
     public List<PeriodoLetivo> periodoLetivos(){
         return  periodoService.listarPeriodos();
+    }
+
+    @ModelAttribute("instituicoes")
+    public List<Instituicao> instituicoes(){
+        return instituicaoService.listarInstituicoes();
     }
 
     @GetMapping("/editarperiodo/{idPeriodo}")

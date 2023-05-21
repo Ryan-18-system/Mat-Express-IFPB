@@ -34,7 +34,7 @@ public class InstituicaoController {
     }
 
     @PostMapping("**/cadastrar")
-    public ModelAndView cadastrarInstituicao(@Valid Instituicao instituicao, BindingResult validation,
+    public ModelAndView cadastrarInstituicao(@Valid Instituicao instituicao,BindingResult validation,
             ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
         if (validation.hasErrors()) {
             modelAndView.setViewName("instituicoes/form");

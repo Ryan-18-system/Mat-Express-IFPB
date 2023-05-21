@@ -17,7 +17,12 @@
         <label for="fim-periodo" class="form-label">Fim do Periodo:</label>
         <input type="date" id="fim-periodo" th:field="*{fim}" class="form-control" th:errorclass="is-invalid" th:value="${periodoLetivo.getFim()}"/>
         <div class="invalid-feedback" th:errors="*{fim}"></div><br>
-
+        <label class="form-label" for="instituicoes">Escolha a sua Instituição</label>
+        <select class="form-select" id="instituicoes" th:field="*{instituicaoPertencente}">
+            <option th:each="i : ${instituicoes}" th:value="${i.id}"
+                    th:text="${i.getNome() + ' - ' + i.sigla}"></option>
+        </select>
+        <hr>
         <button type="submit" class="btn btn-primary mb-3">Salvar</button>
     </form>
     <a class="btn btn-danger" role="button" th:href="@{/matexpress/periodoletivo/listarperiodos}">Cancelar Cadastro</a>

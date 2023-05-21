@@ -14,15 +14,6 @@
         <div class="invalid-feedback" th:errors="*{sigla}"></div><br>
         <hr>
 
-        <div th:if="${instituicao.periodos.size() == 0}">
-            <label class="form-label" for="periodos">Escolha o seu período atual</label>
-            <select class="form-select" id="periodos" th:field="*{periodoAtual}">
-                <option th:each="pi : ${periodos}" th:value="${pi.id}"
-                        th:text="${'Período: '+pi.periodo + ' | Duração: ' + pi.inicio + ' ~ '+ pi.fim }"></option>
-            </select>
-            <hr>
-        </div>
-
         <div th:if="${instituicao.periodos.size() > 0}">
             <label class="form-label" for="periodos-instituicao">Escolha o seu período atual</label>
             <select class="form-select" id="periodos-instituicao" th:field="*{periodoAtual}">
