@@ -33,15 +33,13 @@ public class Instituicao {
     private String sigla;
 
     @NotBlank(message = "Campo obrigatório!")
-//    @Size(max = 20, message = "O telefone deve ter no máximo 20 caracteres")
-//    @Pattern(regexp = "\\([1-9]{2}\\)\\s9?[6-9][0-9]{3}\\-[0-9]{4}", message = "O telefone deve estar no formato (99) 99999-9999")
     private String telefone;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany()
     @JoinColumn(name = "instituicao_id", nullable = true)
     private List<PeriodoLetivo> periodos = new ArrayList<>();
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne()
     @JoinColumn(name = "periodo_atual_id",nullable = true)
     private PeriodoLetivo periodoAtual;
 
