@@ -2,6 +2,7 @@ package br.edu.ifpb.matexpress.model.repositories;
 
 import br.edu.ifpb.matexpress.model.entities.Declaracao;
 
+import br.edu.ifpb.matexpress.model.entities.Documento;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -29,4 +30,7 @@ public interface DeclaracaoRepository extends JpaRepository<Declaracao, Long> {
 
     @Query("SELECT d FROM Declaracao d WHERE d.dataVencimento < :dataVencimento")
     List<Declaracao> findByDataVencimentoMenorQue(@Param("dataVencimento") LocalDate dataVencimento);
+
+    @Query(value = "select d.documento from Declaracao d where d.id = :idDeclaracao")
+    Documento findDocumentoById(@Param("declaracao_id") Long idDeclaracao);
 }

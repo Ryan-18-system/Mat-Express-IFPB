@@ -18,7 +18,11 @@ public class Declaracao {
 
     private LocalDate dataRecebimento;
 
-    private  String observacoes;
+    private String observacoes;
+
+    @OneToOne
+    @JoinColumn(name= "documento_id")
+    private Documento documento;
 
     private LocalDate dataVencimento;
 
