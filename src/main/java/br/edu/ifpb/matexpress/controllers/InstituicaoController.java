@@ -3,14 +3,13 @@ package br.edu.ifpb.matexpress.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.ifpb.matexpress.model.repositories.InstituicaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -24,6 +23,9 @@ import jakarta.validation.Valid;
 public class InstituicaoController {
     @Autowired
     private InstituicaoService instituicaoService;
+
+    @Autowired
+    private InstituicaoRepository instituicaoRepository;
     String mensagem;
 
     @GetMapping("/")
@@ -47,18 +49,24 @@ public class InstituicaoController {
     }
 
     @GetMapping("")
-    public ModelAndView listarInstituicoes(ModelAndView modelAndView) {
+    public ModelAndView listarInstituicoes(@RequestParam(defaultValue = "0") int page, ModelAndView modelAndView) {
+        int pageSize = 10; // Define o tamanho da página
+        Page<Instituicao> instituicoesPage = this.instituicaoRepository.findAll(PageRequest.of(page, pageSize));
+        List<Instituicao> instituicoes = instituicoesPage.getContent();
+
+        modelAndView.addObject("instituicoes", instituicoes);
+        modelAndView.addObject("currentPage", page);
+        modelAndView.addObject("totalPages", instituicoesPage.getTotalPages());
         modelAndView.setViewName("instituicoes/listagem");
-        modelAndView.addObject("instituicoes", this.instituicaoService.listarInstituicoes());
+
         return modelAndView;
     }
 
     @GetMapping("/editarinstituicao/{idInstituicao}")
     public ModelAndView editarInstituicao(ModelAndView modelAndView,
             @PathVariable("idInstituicao") Long idInstituicao) {
-        List<PeriodoLetivo> periodos = new ArrayList<>();
-        periodos.addAll(this.instituicaoService.listarPeriodosCadastrados());
-        periodos.addAll(this.instituicaoService.listarPeriodosDaInstituicao(idInstituicao));
+        //        periodos.addAll(this.instituicaoService.listarPeriodosCadastrados());
+        List<PeriodoLetivo> periodos = new ArrayList<>(this.instituicaoService.listarPeriodosDaInstituicao(idInstituicao));
         modelAndView.setViewName("instituicoes/form");
         modelAndView.addObject("instituicao", instituicaoService.pesquisarPorId(idInstituicao));
         modelAndView.addObject("periodosDaInstituicao", periodos);
