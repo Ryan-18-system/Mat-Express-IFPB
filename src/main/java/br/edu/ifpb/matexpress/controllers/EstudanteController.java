@@ -3,11 +3,14 @@ package br.edu.ifpb.matexpress.controllers;
 import br.edu.ifpb.matexpress.model.entities.Declaracao;
 import br.edu.ifpb.matexpress.model.entities.Estudante;
 import br.edu.ifpb.matexpress.model.entities.Instituicao;
+import br.edu.ifpb.matexpress.model.repositories.EstudanteRepository;
 import br.edu.ifpb.matexpress.model.services.EstudanteService;
 import br.edu.ifpb.matexpress.model.services.InstituicaoService;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +28,9 @@ public class EstudanteController {
 
     @Autowired
     private InstituicaoService instituicaoService;
+
+    @Autowired
+    private EstudanteRepository estudanteRepository;
     String mensagem;
 
     @GetMapping("/declaracoes/{id}")
@@ -54,7 +60,13 @@ public class EstudanteController {
     }
 
     @GetMapping("")
-    public ModelAndView listarEstudantes(ModelAndView modelAndView) {
+    public ModelAndView listarEstudantes(@RequestParam(defaultValue = "0") int page, ModelAndView modelAndView) {
+        int pageSize = 10;
+        Page<Estudante> estudantePage = this.estudanteRepository.findAll(PageRequest.of(page, pageSize));
+        List<Estudante> estudantes = estudantePage.getContent();
+        modelAndView.addObject("estudantes", estudantes);
+        modelAndView.addObject("currentPage", page);
+        modelAndView.addObject("totalPages", estudantePage.getTotalPages());
         modelAndView.setViewName("estudantes/listagem");
         return modelAndView;
     }

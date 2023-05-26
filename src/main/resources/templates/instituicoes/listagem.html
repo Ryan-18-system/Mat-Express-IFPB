@@ -8,7 +8,7 @@
             <div th:text="${mensagem}" th:if="${mensagem ne null}" class="alert alert-success"></div>
         </div>
         <div class="col-3">
-            <a class="btn btn-primary" role="button" th:href="@{instituicoes/}">Cadastrar nova instituição</a>
+            <a class="btn btn-primary" role="button" th:href="@{/matexpress/instituicoes/}">Cadastrar nova instituição</a>
         </div>
     </div>
 
@@ -31,20 +31,46 @@
                 <td th:text="${insti.nome}"></td>
                 <td th:text="${insti.sigla.toUpperCase()}"></td>
                 <td th:text="${insti.telefone}"></td>
-                <td th:if="${insti.periodoAtual != null}" th:text="${'Período: ' + insti.periodoAtual.periodo + ' - Duração: ' + insti.periodoAtual.inicio + ' ~ ' + insti.periodoAtual.fim}"></td>
-                <td th:if="${insti.periodoAtual == null}" th:text="${'Não existe período atual nessa instituição'}"></td>
+                <td th:if="${insti.periodoAtual != null}"
+                    th:text="${'Período: ' + insti.periodoAtual.periodo + ' - Duração: ' + insti.periodoAtual.inicio + ' ~ ' + insti.periodoAtual.fim}"></td>
+                <td th:if="${insti.periodoAtual == null}"
+                    th:text="${'Não existe período atual nessa instituição'}"></td>
                 <td th:text="${insti.getPeriodos().size()}"></td>
                 <td><a class="btn btn-secondary btn-md" role="button"
-                       th:href="@{instituicoes/editarinstituicao/{idInstituicao}(idInstituicao=${insti.getId()})}"><i class="bi bi-pencil-square"></i>
+                       th:href="@{/matexpress/instituicoes/editarinstituicao/{idInstituicao}(idInstituicao=${insti.getId()})}">
+                    <i class="bi bi-pencil-square"></i>
                 </a></td>
                 <td><a class="btn btn-danger btn-md" role="button"
-                       th:href="@{instituicoes/removerinstituicao/{idInstituicao}(idInstituicao=${insti.getId()})}"><i class="bi bi-trash"></i>
+                       th:href="@{/matexpress/instituicoes/removerinstituicao/{idInstituicao}(idInstituicao=${insti.getId()})}">
+                    <i class="bi bi-trash"></i>
                 </a></td>
-
             </tr>
             </tbody>
         </table>
+
+        <!-- Exibe os links de paginação -->
+        <nav aria-label="Navegação de página">
+            <ul class="pagination">
+                <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                    <a class="page-link" th:href="@{/matexpress/instituicoes(page=0)}">Primeira página</a>
+                </li>
+                <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                    <a class="page-link" th:href="@{/matexpress/instituicoes(page=${currentPage - 1})}">Anterior</a>
+                </li>
+                <li class="page-item" th:each="pageNum : ${#numbers.sequence(0, totalPages - 1)}">
+                    <a class="page-link" th:href="@{/matexpress/instituicoes(page=${pageNum})}" th:text="${pageNum + 1}"></a>
+                </li>
+                <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                    <a class="page-link" th:href="@{/matexpress/instituicoes(page=${currentPage + 1})}">Próxima</a>
+                </li>
+                <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                    <a class="page-link" th:href="@{/matexpress/instituicoes(page=${totalPages - 1})}">Última página</a>
+                </li>
+            </ul>
+        </nav>
     </div>
+
 </div>
 </body>
+
 </html>
