@@ -35,11 +35,11 @@ public class Instituicao {
     @NotBlank(message = "Campo obrigatório!")
     private String telefone;
 
-    @OneToMany()
+    @OneToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "instituicao_id", nullable = true)
     private List<PeriodoLetivo> periodos = new ArrayList<>();
 
-    @OneToOne()
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "periodo_atual_id",nullable = true)
     private PeriodoLetivo periodoAtual;
 

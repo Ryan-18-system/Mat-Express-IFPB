@@ -1,7 +1,9 @@
 package br.edu.ifpb.matexpress.model.services;
 
+import br.edu.ifpb.matexpress.model.entities.Estudante;
 import br.edu.ifpb.matexpress.model.entities.Instituicao;
 import br.edu.ifpb.matexpress.model.entities.PeriodoLetivo;
+import br.edu.ifpb.matexpress.model.repositories.EstudanteRepository;
 import br.edu.ifpb.matexpress.model.repositories.InstituicaoRepository;
 import br.edu.ifpb.matexpress.model.repositories.PeriodoRepository;
 import jakarta.transaction.Transactional;
@@ -19,6 +21,8 @@ public class InstituicaoService {
 
     @Autowired
     private PeriodoRepository periodoRepository;
+    @Autowired
+    private EstudanteRepository estudanteRepository;
 
     @Transactional
     public String cadastrarInstituicao(Instituicao newInstituicao) {
@@ -57,6 +61,8 @@ public class InstituicaoService {
     public String deletarPorId(Long idInstituicao) {
         Optional<Instituicao> instituicaoBanco = this.instituicaoRepository.findById(idInstituicao);
         if (instituicaoBanco.isPresent()) {
+            List< Estudante> estudantes = this.estudanteRepository.estudantesDeUmaIntituicao(instituicaoBanco.get().getId());
+            estudantes.forEach( es -> es.setInstituicaoAtual(null));
             this.instituicaoRepository.deleteById(idInstituicao);
             return "Instituição deletada com sucesso";
         }

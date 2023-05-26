@@ -26,6 +26,7 @@ public class Estudante {
     @NotBlank(message="Campo obrigatório!")
     private String matricula;
 
+
     @OneToOne()
     @JoinColumn(name = "instituicao_atual_id",nullable = true)
     private Instituicao instituicaoAtual;
