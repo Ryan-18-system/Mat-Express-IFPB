@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="pt_BR">
+
+<head th:replace="~{/fragments/base :: headfiles}">
+
+</head>
+
+<body class="text-center">
+
+<form class="form-signin" th:action="@{/auth}" method="POST" th:object=${usuario}>
+    <div class="centered">
+        <img th:src="@{/matexpress/imagens/logo-t3.png}" alt="Logo" width="200">
+        <h1 class="h3 mb-3 font-weight-normal autentique">Por favor, autentique-se</h1>
+
+        <div th:if="${not #strings.isEmpty(mensagem)}"
+             th:utext="${mensagem} +'<button type=&quot;button&quot; class=&quot;close&quot; data-dismiss=&quot;alert&quot; aria-label=&quot;Close&quot;><span aria-hidden=&quot;true&quot;>&times;</span></button>'"
+             class="alert alert-danger alert-dismissible fade show" role="alert">
+
+        </div>
+
+        <label for="matricula" class="sr-only">Matricula</label>
+        <input type="matricula" id="matricula" class="form-control input-login" placeholder="Matricula" required autofocus th:field="*{matricula}">
+        <label for="senha" class="sr-only">Senha</label>
+        <input type="password" id="senha" class="form-control input-login" placeholder="Senha" required th:field="*{senha}">
+
+        <div class="checkbox mb-3">
+            <label> <input type="checkbox" value="lembrar">
+                Lembrar-me
+            </label>
+        </div>
+        <button class="btn btn-lg btn-primary" type="submit">Entrar</button>
+    </div>
+</form>
+
+</body>
+
+</html>
