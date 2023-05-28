@@ -30,7 +30,4 @@ public interface DeclaracaoRepository extends JpaRepository<Declaracao, Long> {
 
     @Query("SELECT d FROM Declaracao d WHERE d.dataVencimento < :dataVencimento")
     List<Declaracao> findByDataVencimentoMenorQue(@Param("dataVencimento") LocalDate dataVencimento);
-
-    @Query(value = "select d.documento from Declaracao d where d.id = :idDeclaracao")
-    Documento findDocumentoById(@Param("declaracao_id") Long idDeclaracao);
 }

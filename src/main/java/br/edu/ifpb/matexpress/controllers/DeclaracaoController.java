@@ -14,10 +14,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
@@ -49,7 +58,9 @@ public class DeclaracaoController {
     }
 
     @PostMapping("salvar")
-    public ModelAndView cadastrarDeclaracao(Declaracao declaracao, ModelAndView modelAndView) {
+    public ModelAndView cadastrarDeclaracao(@ModelAttribute("declaracao") Declaracao declaracao,
+            @RequestParam("file") MultipartFile arquivo,
+            ModelAndView modelAndView) {
         modelAndView.setViewName("redirect:/matexpress/estudantes");
         declaracaoService.novaDeclaracao(declaracao);
         return modelAndView;
@@ -110,26 +121,25 @@ public class DeclaracaoController {
     }
 
     @RequestMapping(value = "/{id}/documentos/upload", method = RequestMethod.POST)
-    public ModelAndView uploadFile(@RequestParam("file") MultipartFile arquivo,
-            @PathVariable("id") Long id, ModelAndView mav) {
+    @Transactional
+    public ModelAndView save(Declaracao declaracao, ModelAndView mav, @RequestParam("file") MultipartFile arquivo,
+            RedirectAttributes attr) {
         String mensagem = "";
         String proxPagina = "";
         try {
-            Optional<Declaracao> opDeclaracao = declaracaoRepository.findById(id);
-            Declaracao declaracao = null;
-            if (opDeclaracao.isPresent()) {
-                declaracao = opDeclaracao.get();
-                String nomeArquivo = StringUtils.cleanPath(arquivo.getOriginalFilename());
-                Documento documento = documentoService.gravar(declaracao, nomeArquivo, arquivo.getBytes());
-                documento.setUrl(this.buildUrl(declaracao.getId(), documento.getId()));
-                declaracaoRepository.save(declaracao);
-                mensagem = "Documento carregado com sucesso: " + arquivo.getOriginalFilename();
-                proxPagina = String.format("redirect:/declaracoes/%s/documentos", declaracao.getId().toString());
-            }
+            declaracaoRepository.save(declaracao);
+            Documento documento = documentoService.gravar(declaracao, arquivo.getOriginalFilename(),
+                    arquivo.getBytes());
+            documento.setUrl(buildUrl(declaracao.getId(), documento.getId()));
+            declaracao.setDocumento(documento);
+            declaracaoRepository.save(declaracao);
+            attr.addFlashAttribute("mensagem", documento.getId() + " cadastrado com sucesso!");
+            attr.addFlashAttribute("documento", documento);
+            proxPagina = "redirect:documentos";
         } catch (Exception e) {
             mensagem = "Não foi possível carregar o documento: " + arquivo.getOriginalFilename() + "! "
                     + e.getMessage();
-            proxPagina = "/declaracoes/documentos/form";
+            proxPagina = "/declaracoes/form";
         }
         mav.addObject("mensagem", mensagem);
         mav.setViewName(proxPagina);
@@ -163,5 +173,4 @@ public class DeclaracaoController {
     public List<Declaracao> declaracoesVencidas() {
         return declaracaoService.obterDeclaracoesVencidas();
     }
-
 }
