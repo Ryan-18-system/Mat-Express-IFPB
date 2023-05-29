@@ -8,6 +8,9 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @Repository
 public interface DeclaracaoRepository extends JpaRepository<Declaracao, Long> {
 
@@ -19,4 +22,7 @@ public interface DeclaracaoRepository extends JpaRepository<Declaracao, Long> {
     @Modifying
     @Query("UPDATE Declaracao d SET d.declaracaoAtual = true WHERE d.id = :declaracaoId")
     void atualizarAtualParaFalsePorId(Long declaracaoId);
+
+    List<Declaracao> findByDataVencimentoBefore(LocalDate dataVencimento);
+
 }

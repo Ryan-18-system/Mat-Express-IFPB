@@ -10,10 +10,7 @@ import br.edu.ifpb.matexpress.model.services.InstituicaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
@@ -58,8 +55,19 @@ public class DeclaracaoController {
         return  modelAndView;
     }
 
+    @PostMapping("/inserir-dias")
+    public ModelAndView declaracoesAVencer(ModelAndView modelAndView) {
+        modelAndView.setViewName("declaracoes/inserir-dias");
+        return modelAndView;
+    }
 
-    private List<PeriodoLetivo> listarPeriodosDaIntituicao(Long id){
+    @GetMapping("/relatorio/{quantidadeDias}")
+    public ModelAndView relatoriosDeclaracoes(@PathVariable Integer quantidadeDias, ModelAndView modelAndView) {
+        List<Declaracao> declaracoesAVencer = declaracaoService.obterDeclaracoesAVencer(quantidadeDias);
+        modelAndView.addObject("declaracoesAVencer", declaracoesAVencer);
+        return modelAndView;
+    }
+        private List<PeriodoLetivo> listarPeriodosDaIntituicao(Long id){
         return this.instituicaoService.listarPeriodosDaInstituicao(id);
     }
 
