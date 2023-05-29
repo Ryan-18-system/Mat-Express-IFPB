@@ -55,5 +55,13 @@
                     </div>
                 </div>
         </div>
+        <div style="margin-right: 5px;">
+            <span th:if="${session.usuario != null}" th:text="${session.usuario.matricula}" style="margin-right: 3px; font-size: 0.8em;"></span>
+            <a th:href="@{/matexpress/auth/logout}">
+                <button class="btn btn-outline-secondary my-2 my-sm-0">Sair</button>
+            </a>
+        </div>
+
     </nav>
 </div>
+
