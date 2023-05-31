@@ -10,9 +10,10 @@
 
 
     <label class="form-label" for="dataVencimento">Data Vencimento</label>
-    <input class="form-control" id="dataVencimento" type="date" th:field="*{dataVencimento}"/><br><br>
+    <input class="form-control" id="dataVencimento" type="date" th:field="*{dataVencimento}"/><br>
     
-    <input class="form-control" type="file" name="file" accept="application/pdf"/><br>
+    <label for="file">Arquivo</label><br>
+    <input id="file" class="form-control" type="file" name="file" accept="doc/pdf" /><br>
 
     <label class="form-label" for="estudante">Estudante</label>
     <select class="form-select" id="estudante" th:field="*{titular}">

@@ -128,14 +128,14 @@ public class DeclaracaoController {
         String proxPagina = "";
         try {
             declaracaoRepository.save(declaracao);
-            Documento documento = documentoService.gravar(declaracao, arquivo.getOriginalFilename(),
-                    arquivo.getBytes());
+            Documento documento = new Documento(arquivo.getOriginalFilename(), arquivo.getBytes());
+            documento = documentoService.gravar(declaracao, arquivo.getOriginalFilename(), arquivo.getBytes());
             documento.setUrl(buildUrl(declaracao.getId(), documento.getId()));
             declaracao.setDocumento(documento);
             declaracaoRepository.save(declaracao);
             attr.addFlashAttribute("mensagem", documento.getId() + " cadastrado com sucesso!");
             attr.addFlashAttribute("documento", documento);
-            proxPagina = "redirect:documentos";
+            proxPagina = "redirect:declaracoes";
         } catch (Exception e) {
             mensagem = "Não foi possível carregar o documento: " + arquivo.getOriginalFilename() + "! "
                     + e.getMessage();

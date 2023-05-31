@@ -26,11 +26,11 @@ public class DocumentoService {
         return documento;
     }
 
-    public Documento getDocumento(Long id){
+    public Documento getDocumento(Long id) {
         return documentoRepository.findById(id).get();
     }
 
-    public Optional<Documento> getDocumentoOf(Long idDeclaracao){
+    public Optional<Documento> getDocumentoOf(Long idDeclaracao) {
         return Optional.ofNullable(declaracaoRepository.findDocumentoById(idDeclaracao));
     }
 }
