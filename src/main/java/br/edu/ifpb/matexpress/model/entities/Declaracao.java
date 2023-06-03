@@ -19,7 +19,7 @@ public class Declaracao {
     private LocalDate dataRecebimento;
 
     @OneToOne
-    @JoinColumn(name = "id_documento")
+    @JoinColumn(name = "documento_id")
     private Documento documento;
 
     private LocalDate dataVencimento;
