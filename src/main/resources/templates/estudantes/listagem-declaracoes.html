@@ -27,7 +27,7 @@
             <td th:text="${dec.getDeclaracaoAtual()} ? 'Sim' : 'Não'"></td>
 
             <td>
-                <a th:href="@{/matexpress/declaracoes/{id}/documentos/{idDocumento}(id=${dec.getId()}, idDocumento=${documento})}" title="Download">
+                <a th:href="@{/matexpress/declaracoes/{id}/documentos/{idDocumento}(id=${dec.getId()}, idDocumento=${dec.documento.getId()})}" title="Download">
                     <i class="bi bi-download" aria-hidden="true"></i>
                 </a>
             </td>

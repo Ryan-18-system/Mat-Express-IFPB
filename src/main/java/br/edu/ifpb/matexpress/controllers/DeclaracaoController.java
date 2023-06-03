@@ -29,6 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,7 +61,11 @@ public class DeclaracaoController {
     @PostMapping("salvar")
     public ModelAndView cadastrarDeclaracao(@ModelAttribute("declaracao") Declaracao declaracao,
             @RequestParam("file") MultipartFile arquivo,
-            ModelAndView modelAndView) {
+            ModelAndView modelAndView) throws IOException {
+        String nomeArquivo = StringUtils.cleanPath(arquivo.getOriginalFilename());
+        Documento documento = documentoService.gravar(declaracao, nomeArquivo, arquivo.getBytes());
+        documento.setUrl(buildUrl(declaracao.getId(), documento.getId()));
+        declaracao.setDocumento(documento);
         modelAndView.setViewName("redirect:/matexpress/estudantes");
         declaracaoService.novaDeclaracao(declaracao);
         return modelAndView;
@@ -123,7 +128,7 @@ public class DeclaracaoController {
     @RequestMapping(value = "/{id}/documentos/upload", method = RequestMethod.POST)
     @Transactional
     public ModelAndView save(Declaracao declaracao, ModelAndView mav, @RequestParam("file") MultipartFile arquivo,
-            RedirectAttributes attr) {
+                             RedirectAttributes attr) {
         String mensagem = "";
         String proxPagina = "";
         try {
