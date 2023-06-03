@@ -3,7 +3,7 @@
 <div layout:fragment="content">
     <div>
         <div>
-            <h4 class="mb-3">Listagem de declarações a vencer</h4>
+            <h4 class="mb-3">Listagem de declarações a vencer em <span th:text="${param.dias}"></span> dias</h4>
         </div>
     </div>
     <br />
@@ -11,16 +11,18 @@
         <table class="table table-striped table-hover">
             <thead>
             <tr>
-                <th>Data de Recebimento</th>
-                <th>Observações</th>
+                <th>Estudante</th>
+                <th>Matricula</th>
+                <th>Instituição</th>
                 <th>Data de Vencimento</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="declaracao : ${declaracoesAVencer}">
-                <td th:text="${declaracao.dataRecebimento}"></td>
-                <td th:text="${declaracao.observacoes}"></td>
-                <td th:text="${declaracao.dataVencimento}"></td>
+                <td th:text="${declaracao.titular.nome}"></td>
+                <td th:text="${declaracao.titular.matricula}"></td>
+                <td th:text="${declaracao.titular.getInstituicaoAtual().nome}"></td>
+                <td th:text="${#temporals.format(declaracao.dataVencimento, 'dd/MM/yyyy')}"></td>
             </tr>
             </tbody>
         </table>

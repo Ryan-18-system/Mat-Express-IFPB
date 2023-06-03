@@ -2,12 +2,11 @@
 
 <body>
 <div layout:fragment="content">
-
-        <form th:action="@{/relatorio/{quantidadeDias}(quantidadeDias=${dias})}" method="POST">
+        <form th:action="@{/matexpress/declaracoes/relatorio}" th:object="${declaracoesAVencer}" method="GET">
             <div class="row">
                 <div class="col-md-2 mb-2">
                     <label for="dias">Quantidade de dias</label>
-                    <input type="text" id="dias" name="dias" class="form-control" />
+                    <input type="number" id="dias" name="dias" class="form-control" />
                 </div>
             </div>
             <div class="row">

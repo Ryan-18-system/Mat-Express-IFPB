@@ -34,4 +34,15 @@ public class Estudante {
     @OneToMany(mappedBy = "titular", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Declaracao> declaracoes = new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return "Estudante{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", matricula='" + matricula + '\'' +
+                ", instituicaoAtual=" + (instituicaoAtual != null ? instituicaoAtual.getId() : null) +
+                ", declaracoes=" + (declaracoes != null ? declaracoes.size() : null) +
+                '}';
+    }
+
 }

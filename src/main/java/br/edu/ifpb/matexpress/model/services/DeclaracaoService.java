@@ -77,8 +77,8 @@ public class DeclaracaoService {
     }
 
     public List<Declaracao> obterDeclaracoesAVencer(int quantidadeDias) {
-        LocalDate dataAtual = LocalDate.now();
-        LocalDate dataVencimento = dataAtual.plusDays(quantidadeDias);
-        return declaracaoRepository.findByDataVencimentoBefore(dataVencimento);
+        LocalDate dataVencimento = LocalDate.now().plusDays(quantidadeDias);
+        List<Declaracao> declaracoes = declaracaoRepository.findByDataVencimento(dataVencimento);
+        return declaracoes;
     }
 }

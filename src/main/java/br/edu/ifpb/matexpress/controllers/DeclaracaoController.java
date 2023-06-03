@@ -55,24 +55,29 @@ public class DeclaracaoController {
         return  modelAndView;
     }
 
-    @PostMapping("/inserir-dias")
+    @GetMapping("/inserir-dias")
     public ModelAndView declaracoesAVencer(ModelAndView modelAndView) {
         modelAndView.setViewName("declaracoes/inserir-dias");
         return modelAndView;
     }
 
-    @GetMapping("/relatorio/{quantidadeDias}")
-    public ModelAndView relatoriosDeclaracoes(@PathVariable Integer quantidadeDias, ModelAndView modelAndView) {
-        List<Declaracao> declaracoesAVencer = declaracaoService.obterDeclaracoesAVencer(quantidadeDias);
-        modelAndView.addObject("declaracoesAVencer", declaracoesAVencer);
+    @GetMapping("/relatorio")
+    public ModelAndView relatoriosDeclaracoes(@RequestParam("dias") int quantidadeDias, ModelAndView modelAndView) {
+        modelAndView.setViewName("declaracoes/relatorio");
+        modelAndView.addObject("declaracoesAVencer", this.declaracoesRelatorio(quantidadeDias));
         return modelAndView;
     }
+
         private List<PeriodoLetivo> listarPeriodosDaIntituicao(Long id){
         return this.instituicaoService.listarPeriodosDaInstituicao(id);
     }
 
     private Estudante getEstudante(Long id){
         return this.estudanteService.pesquisarPorId(id);
+    }
+
+    public List<Declaracao> declaracoesRelatorio(int dias) {
+        return declaracaoService.obterDeclaracoesAVencer(dias);
     }
 
 }
