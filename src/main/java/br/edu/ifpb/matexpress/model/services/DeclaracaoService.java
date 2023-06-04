@@ -12,8 +12,10 @@ import com.itextpdf.text.pdf.PdfWriter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import java.util.List;
 
 import java.io.ByteArrayOutputStream;
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -72,5 +74,11 @@ public class DeclaracaoService {
             System.out.println("Erro ao gerar PDF " + e.getMessage());
         }
         return response;
+    }
+
+    public List<Declaracao> obterDeclaracoesAVencer(int quantidadeDias) {
+        LocalDate dataVencimento = LocalDate.now().plusDays(quantidadeDias);
+        List<Declaracao> declaracoes = declaracaoRepository.findByDataVencimento(dataVencimento);
+        return declaracoes;
     }
 }
