@@ -62,8 +62,8 @@ public class EstudanteService {
         return "Estudante não encontrado, impossível deletar";
     }
 
-    public List<Estudante> obterEstudantesSemDeclaracao(Declaracao declaracao) {
-        List<Estudante> estudantes = estudanteRepository.estudanteSemDeclaracao(declaracao);
+    public List<Estudante> obterEstudantesSemDeclaracao() {
+        List<Estudante> estudantes = estudanteRepository.findAll();
         return estudantes;
     }
 }

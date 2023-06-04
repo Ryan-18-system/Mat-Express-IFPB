@@ -18,9 +18,9 @@
             </thead>
             <tbody>
             <tr th:each="estudante : ${estudanteSemDeclaracao}">
-                <td th:text="${estudante.getNome()}"></td>
-                <td th:text="${estudante.getMatricula()}"></td>
-                <td th:text="${estudante.getInstituicaoAtual()}"></td>
+                <td th:text="${estudante.nome}"></td>
+                <td th:text="${estudante.matricula}"></td>
+                <td th:text="${estudante.instituicaoAtual.sigla}"></td>
 
             </tr>
             </tbody>

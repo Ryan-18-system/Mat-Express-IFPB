@@ -95,9 +95,9 @@ public class EstudanteController {
         return modelAndView;
     }
     @GetMapping("/relatorio")
-    public ModelAndView relatoriosEstudantes(Declaracao declaracao, ModelAndView modelAndView) {
+    public ModelAndView relatoriosEstudantes(ModelAndView modelAndView) {
         modelAndView.setViewName("estudantes/relatorio");
-        modelAndView.addObject("estudanteSemDeclaracao", this.estudantesRelatorio(declaracao));
+        modelAndView.addObject("estudanteSemDeclaracao", this.estudantesRelatorio());
         return modelAndView;
     }
 
@@ -118,7 +118,15 @@ public class EstudanteController {
         return  ePesquisado.getDeclaracoes();
     }
 
-    public List<Estudante> estudantesRelatorio(Declaracao declaracao) {
-        return estudanteService.obterEstudantesSemDeclaracao(declaracao);
+    public List<Estudante> estudantesRelatorio() {
+        List<Estudante> estudantes = this.estudanteService.obterEstudantesSemDeclaracao();
+        List<Estudante> estudantesSemDeclaracao = new ArrayList<>();
+        for (Estudante estudante : estudantes) {
+            if (estudante.getDeclaracoes().isEmpty()) {
+                estudantesSemDeclaracao.add(estudante);
+            }
+        }
+        return estudantesSemDeclaracao;
     }
+
 }

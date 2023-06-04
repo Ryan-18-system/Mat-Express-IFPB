@@ -18,10 +18,6 @@ public interface EstudanteRepository extends JpaRepository<Estudante,Long> {
 
     @Query("SELECT e FROM Estudante e WHERE e.instituicaoAtual.id = :instituicaoId")
     List<Estudante> estudantesDeUmaIntituicao(@Param("instituicaoId") Long instituicaoId);
-
-    @Query("SELECT e FROM Estudante e WHERE e.declaracoes.size = 0")
-    List<Estudante> estudanteSemDeclaracao(@Param("declaracao") Declaracao declaracao);
-
     Page<Estudante> findAll(Pageable pageable);
 
 }
