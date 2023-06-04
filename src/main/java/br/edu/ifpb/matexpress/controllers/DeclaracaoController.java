@@ -27,32 +27,33 @@ public class DeclaracaoController {
     private EstudanteService estudanteService;
 
     @GetMapping()
-    public ModelAndView homeDeclaracoes(ModelAndView modelAndView){
+    public ModelAndView homeDeclaracoes(ModelAndView modelAndView) {
         modelAndView.setViewName("declaracoes/listagem");
-        return  modelAndView;
+        return modelAndView;
     }
 
     @PostMapping("salvar")
-    public ModelAndView cadastrarDeclaracao(Declaracao declaracao, ModelAndView modelAndView){
+    public ModelAndView cadastrarDeclaracao(Declaracao declaracao, ModelAndView modelAndView) {
         modelAndView.setViewName("redirect:/matexpress/estudantes");
         declaracaoService.novaDeclaracao(declaracao);
         return modelAndView;
     }
+
     @GetMapping("gerar-pdf/{id}")
-    public ResponseEntity<byte[]> gerarPdf(@PathVariable("id") Long id){
-        return  this.declaracaoService.gerarPdfPorId(id);
+    public ResponseEntity<byte[]> gerarPdf(@PathVariable("id") Long id) {
+        return this.declaracaoService.gerarPdfPorId(id);
     }
 
     @GetMapping("/{id}")
-    public ModelAndView formDeclaracoes(ModelAndView modelAndView, Declaracao declaracao, @PathVariable("id") Long id){
+    public ModelAndView formDeclaracoes(ModelAndView modelAndView, Declaracao declaracao, @PathVariable("id") Long id) {
         Estudante estudantePesquisado = this.getEstudante(id);
         Instituicao instituicao = estudantePesquisado.getInstituicaoAtual();
         modelAndView.setViewName("declaracoes/form");
         modelAndView.addObject("declaracao", declaracao);
-        modelAndView.addObject("estudantePesquisado",estudantePesquisado);
-        modelAndView.addObject("instituicao",instituicao);
+        modelAndView.addObject("estudantePesquisado", estudantePesquisado);
+        modelAndView.addObject("instituicao", instituicao);
         modelAndView.addObject("periodos", this.listarPeriodosDaIntituicao(instituicao.getId()));
-        return  modelAndView;
+        return modelAndView;
     }
 
     @GetMapping("/inserir-dias")
@@ -68,16 +69,27 @@ public class DeclaracaoController {
         return modelAndView;
     }
 
-        private List<PeriodoLetivo> listarPeriodosDaIntituicao(Long id){
+    @GetMapping("/relatorio-vencidas")
+    public ModelAndView relatorioDeclaracoesVencidas(ModelAndView modelAndView) {
+        modelAndView.setViewName("declaracoes/relatorio-vencidas");
+        modelAndView.addObject("declaracoesVencidas", this.declaracoesVencidas());
+        return modelAndView;
+    }
+
+    private List<PeriodoLetivo> listarPeriodosDaIntituicao(Long id) {
         return this.instituicaoService.listarPeriodosDaInstituicao(id);
     }
 
-    private Estudante getEstudante(Long id){
+    private Estudante getEstudante(Long id) {
         return this.estudanteService.pesquisarPorId(id);
     }
 
     public List<Declaracao> declaracoesRelatorio(int dias) {
         return declaracaoService.obterDeclaracoesAVencer(dias);
+    }
+
+    public List<Declaracao> declaracoesVencidas() {
+        return declaracaoService.obterDeclaracoesVencidas();
     }
 
 }
