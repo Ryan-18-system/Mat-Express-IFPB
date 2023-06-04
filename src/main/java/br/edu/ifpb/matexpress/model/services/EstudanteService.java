@@ -10,6 +10,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,5 +60,10 @@ public class EstudanteService {
             return "Estudante deletado com sucesso";
         }
         return "Estudante não encontrado, impossível deletar";
+    }
+
+    public List<Estudante> obterEstudantesSemDeclaracao(Declaracao declaracao) {
+        List<Estudante> estudantes = estudanteRepository.estudanteSemDeclaracao(declaracao);
+        return estudantes;
     }
 }
