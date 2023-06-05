@@ -56,9 +56,9 @@ public class DeclaracaoController {
         return modelAndView;
     }
 
-    @GetMapping("/inserir-dias")
+    @GetMapping("/gerar-relatorios")
     public ModelAndView declaracoesAVencer(ModelAndView modelAndView) {
-        modelAndView.setViewName("declaracoes/inserir-dias");
+        modelAndView.setViewName("declaracoes/gerar-relatorios");
         return modelAndView;
     }
 

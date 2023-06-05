@@ -48,6 +48,11 @@
                             <a class="dropdown-item" th:href="@{/matexpress/estudantes}">Listar</a>
                         </div>
                     </div>
+                    <div class="nav-item" th:classappend="${menu == 'relatorios'} ? 'active'">
+                            <a th:href="@{/matexpress/declaracoes/gerar-relatorios}">
+                                <button class="btn btn-link" style="color: black">Relatórios</button>
+                            </a>
+                    </div>
                 </div>
         </div>
     </nav>
