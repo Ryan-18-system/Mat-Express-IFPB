@@ -1,5 +1,6 @@
 package br.edu.ifpb.matexpress.model.repositories;
 
+import br.edu.ifpb.matexpress.model.entities.Declaracao;
 import br.edu.ifpb.matexpress.model.entities.Estudante;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +18,6 @@ public interface EstudanteRepository extends JpaRepository<Estudante,Long> {
 
     @Query("SELECT e FROM Estudante e WHERE e.instituicaoAtual.id = :instituicaoId")
     List<Estudante> estudantesDeUmaIntituicao(@Param("instituicaoId") Long instituicaoId);
-
     Page<Estudante> findAll(Pageable pageable);
 
 }

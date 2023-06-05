@@ -3,6 +3,7 @@ package br.edu.ifpb.matexpress.controllers;
 import br.edu.ifpb.matexpress.model.entities.Declaracao;
 import br.edu.ifpb.matexpress.model.entities.Estudante;
 import br.edu.ifpb.matexpress.model.entities.Instituicao;
+import br.edu.ifpb.matexpress.model.entities.PeriodoLetivo;
 import br.edu.ifpb.matexpress.model.repositories.EstudanteRepository;
 import br.edu.ifpb.matexpress.model.services.EstudanteService;
 import br.edu.ifpb.matexpress.model.services.InstituicaoService;
@@ -93,6 +94,13 @@ public class EstudanteController {
         modelAndView.setViewName("redirect:/matexpress/estudantes");
         return modelAndView;
     }
+    @GetMapping("/relatorio")
+    public ModelAndView relatoriosEstudantes(ModelAndView modelAndView) {
+        modelAndView.setViewName("estudantes/relatorio");
+        modelAndView.addObject("estudanteSemDeclaracao", this.estudantesRelatorio());
+        return modelAndView;
+    }
+
 
     @ModelAttribute("instituicoes")
     public List<Instituicao> instituicoes() {
@@ -109,4 +117,16 @@ public class EstudanteController {
         Estudante ePesquisado = this.estudanteService.pesquisarPorId(idEstudante);
         return  ePesquisado.getDeclaracoes();
     }
+
+    public List<Estudante> estudantesRelatorio() {
+        List<Estudante> estudantes = this.estudanteService.obterEstudantesSemDeclaracao();
+        List<Estudante> estudantesSemDeclaracao = new ArrayList<>();
+        for (Estudante estudante : estudantes) {
+            if (estudante.getDeclaracoes().isEmpty()) {
+                estudantesSemDeclaracao.add(estudante);
+            }
+        }
+        return estudantesSemDeclaracao;
+    }
+
 }
