@@ -1,0 +1,62 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
+<body>
+<div layout:fragment="content">
+    <div class="card rounded-4 mb-3" style="width: 60%;margin: auto;">
+        <div class="flex-column d-flex p-5" style="width: 160%;margin: auto;">
+            <h4>Relatório de declarações a vencer</h4>
+            <form th:action="@{/matexpress/declaracoes/relatorio}" method="GET">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="dias">Insira a quantidade de dias</label>
+                        <input type="number" id="dias" name="dias" class="form-control" required />
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-3">
+                        <button class="btn btn-primary btn-md btn-block" type="submit">
+                            Gerar relatório
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card rounded-4 mb-3" style="width: 60%;margin: auto;">
+        <div class="p-5 flex-column d-flex">
+            <h4>Relatório de declarações vencidas</h4>
+            <br>
+            <div class="row">
+                <div class="col-md-3">
+                    <a th:href="@{/matexpress/declaracoes/relatorio-vencidas}">
+                        <button class="btn btn-primary btn-md btn-block">
+                            Gerar relatório
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card rounded-4 mb-3" style="width: 60%;margin: auto;">
+        <div class="p-5 flex-column d-flex">
+            <h4>Relatório de estudantes que não apresentaram declaração</h4>
+            <br>
+            <div class="row">
+                <div class="col-md-3">
+                    <a th:href="@{/matexpress/estudantes/relatorio}">
+                        <button class="btn btn-primary btn-md btn-block">
+                            Gerar relatório
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
+
