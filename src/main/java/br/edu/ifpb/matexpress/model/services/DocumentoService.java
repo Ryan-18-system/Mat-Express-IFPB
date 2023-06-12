@@ -30,7 +30,4 @@ public class DocumentoService {
         return documentoRepository.findById(id).get();
     }
 
-    public Optional<Documento> getDocumentoOf(Long idDeclaracao) {
-        return Optional.ofNullable(declaracaoRepository.findDocumentoById(idDeclaracao));
-    }
 }

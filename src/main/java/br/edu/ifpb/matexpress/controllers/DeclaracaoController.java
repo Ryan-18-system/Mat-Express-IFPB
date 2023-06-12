@@ -12,6 +12,8 @@ import br.edu.ifpb.matexpress.model.services.EstudanteService;
 import br.edu.ifpb.matexpress.model.services.InstituicaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -115,14 +117,20 @@ public class DeclaracaoController {
         return mav;
     }
 
-    @GetMapping("/{id}/documentos")
-    public ModelAndView getDocumentos(@PathVariable("id") Long id, ModelAndView mav) {
-        Optional<Documento> documento = documentoService.getDocumentoOf(id);
+    @GetMapping("/{id}/documentos/{idDoc}")
+    public ResponseEntity<byte[]> getDocumentos(@PathVariable("id") Long id, @PathVariable("idDoc") Long idDoc, ModelAndView mav) {
+        Optional<Documento> documento = Optional.ofNullable(documentoService.getDocumento(idDoc));
         if (documento.isPresent()) {
-            mav.addObject("documento", documento.get());
+            Documento doc = documento.get();
+            HttpHeaders headers = new HttpHeaders();
+            //mav.addObject("documento", documento.get());
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            headers.setContentDispositionFormData("attachment", doc.getNome());
+
+            return new ResponseEntity<>(doc.getDados(), headers, HttpStatus.OK);
         }
-        mav.setViewName("declaracoes/documentos/list");
-        return mav;
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
     }
 
     @RequestMapping(value = "/{id}/documentos/upload", method = RequestMethod.POST)

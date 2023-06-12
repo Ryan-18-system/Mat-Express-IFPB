@@ -13,7 +13,7 @@
     <input class="form-control" id="dataVencimento" type="date" th:field="*{dataVencimento}"/><br>
     
     <label for="file">Arquivo</label><br>
-    <input id="file" class="form-control" type="file" name="file" accept="doc/pdf" /><br>
+    <input id="file" class="form-control" type="file" name="file" accept="doc/pdf" required /><br>
 
     <label class="form-label" for="estudante">Estudante</label>
     <select class="form-select" id="estudante" th:field="*{titular}">
