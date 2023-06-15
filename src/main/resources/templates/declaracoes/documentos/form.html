@@ -1,0 +1,21 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:insert="~{layout/layout}" th:with="titulo='Upload de Documento'">
+    <body>
+        <div layout:fragment="content">
+            <form id="uploadForm" method="post" th:action="@{/declaracoes/{id}/documentos/upload(id=${id})}" enctype="multipart/form-data" class="row g-2">
+                <input type="hidden" name="idDeclaracao" th:value="${idDeclaracao}"/>
+                <div class="row">
+                    <div class="col-md-10">
+                        <label for="file">Arquivo</label>
+                        <input id="file" class="form-control" type="file" name="file" accept="application/pdf"/>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <!--label for="upload">&nbsp;</label>-->
+                            <button class="btn btn-sm btn-primary form-control" type="submit" name="dados">Upload</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

@@ -15,7 +15,7 @@
             <th>Recebimento</th>
             <th>Vencimento</th>
             <th>Atual</th>
-            <th>Observações</th>
+            <th>Download</th>
             <th>Gerar PDF</th>
         </tr>
         </thead>
@@ -25,9 +25,17 @@
             <td th:text="${#temporals.format(dec.getDataRecebimento(), 'dd/MM/yyyy')}"></td>
             <td th:text="${#temporals.format(dec.getDataVencimento(), 'dd/MM/yyyy')}"></td>
             <td th:text="${dec.getDeclaracaoAtual()} ? 'Sim' : 'Não'"></td>
-            <td th:text="${dec.observacoes}" th:maxlength="25"></td>
+
+            <td>
+                <a th:href="@{/matexpress/declaracoes/{id}/documentos/{idDocumento}(id=${dec.getId()}, idDocumento=${dec.documento.getId()})}" title="Download">
+                    <i class="bi bi-download" aria-hidden="true"></i>
+                </a>
+            </td>
+            
+            
             <td><a class="btn btn-danger" role="button"
-                   th:href="@{/matexpress/declaracoes/gerar-pdf/{id}(id=${dec.getId()})}"><i class="bi bi-file-earmark-pdf"></i>
+                   th:href="@{/matexpress/declaracoes/gerar-pdf/{id}(id=${dec.getId()})}">
+                   <i class="bi bi-file-earmark-pdf"></i>
             </a></td>
         </tr>
         </tbody>

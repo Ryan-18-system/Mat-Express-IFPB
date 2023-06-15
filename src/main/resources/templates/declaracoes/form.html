@@ -2,17 +2,18 @@
 
 <body>
 <div layout:fragment="content">
-<form th:action="@{salvar}" method="post" th:object="${declaracao}">
+<form th:action="@{salvar}" method="post" th:object="${declaracao}" enctype="multipart/form-data">
 
     <input type="hidden" th:field="*{id}"/>
     <label class="form-label" for="dataRecebimento">Data Recebimento</label>
     <input class="form-control" type="date" id="dataRecebimento" th:field="*{dataRecebimento}"><br>
 
+
     <label class="form-label" for="dataVencimento">Data Vencimento</label>
     <input class="form-control" id="dataVencimento" type="date" th:field="*{dataVencimento}"/><br>
-
-    <label class="form-label" for="observacoes">Observações</label>
-    <textarea class="form-control" id="observacoes" type="text" th:field="*{observacoes}"></textarea><br>
+    
+    <label for="file">Arquivo</label><br>
+    <input id="file" class="form-control" type="file" name="file" accept="doc/pdf" required /><br>
 
     <label class="form-label" for="estudante">Estudante</label>
     <select class="form-select" id="estudante" th:field="*{titular}">
