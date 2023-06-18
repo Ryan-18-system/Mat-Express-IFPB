@@ -20,7 +20,7 @@ public class MatExpressSecurityConfig {
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests( (authorize) -> authorize
-                .requestMatchers("/auth").permitAll()
+                .requestMatchers("/css/**", "/imagens/**").permitAll()
                 .anyRequest().authenticated()
         ).formLogin( (form) -> form
                 .loginPage("/matexpress/auth/login")
