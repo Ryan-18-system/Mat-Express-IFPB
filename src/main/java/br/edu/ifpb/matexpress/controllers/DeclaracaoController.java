@@ -63,7 +63,13 @@ public class DeclaracaoController {
     @PostMapping("salvar")
     public ModelAndView cadastrarDeclaracao(@ModelAttribute("declaracao") Declaracao declaracao,
             @RequestParam("file") MultipartFile arquivo,
-            ModelAndView modelAndView) throws IOException {
+            ModelAndView modelAndView, RedirectAttributes redirectAttributes) throws IOException {
+        String mensagemErro = verificarValidadeDatas(declaracao);
+        if (mensagemErro != null) {
+            redirectAttributes.addFlashAttribute("mensagemErro", mensagemErro);
+            return new ModelAndView("redirect:/matexpress/declaracoes/" + declaracao.getTitular().getId());
+        }
+
         String nomeArquivo = StringUtils.cleanPath(arquivo.getOriginalFilename());
         Documento documento = documentoService.gravar(declaracao, nomeArquivo, arquivo.getBytes());
         documento.setUrl(buildUrl(declaracao.getId(), documento.getId()));
@@ -71,6 +77,15 @@ public class DeclaracaoController {
         modelAndView.setViewName("redirect:/matexpress/estudantes");
         declaracaoService.novaDeclaracao(declaracao);
         return modelAndView;
+    }
+
+    private String verificarValidadeDatas(Declaracao declaracao) {
+        if (declaracao.getDataVencimento() != null && declaracao.getDataRecebimento() != null) {
+            if (declaracao.getDataRecebimento().isAfter(declaracao.getDataVencimento()) || declaracao.getDataRecebimento().isEqual(declaracao.getDataVencimento())) {
+                return "Data de recebimento deve ser anterior à data de vencimento";
+            }
+        }
+        return null;
     }
 
     @GetMapping("gerar-pdf/{id}")

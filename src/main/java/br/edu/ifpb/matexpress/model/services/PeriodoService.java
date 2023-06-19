@@ -19,13 +19,17 @@ public class PeriodoService {
     private InstituicaoRepository instituicaoRepository;
 
     @Transactional
-    public void cadastrarPeriodo(PeriodoLetivo newPeriodo) {
+    public String cadastrarPeriodo(PeriodoLetivo newPeriodo) {
         Optional<Instituicao> instituicaoBanco = instituicaoRepository.findById(newPeriodo.getInstituicaoPertencente().getId());
         if (instituicaoBanco.isPresent()) {
             Instituicao instituicao = instituicaoBanco.get();
+            if (newPeriodo.getInicio().isAfter(newPeriodo.getFim()) || newPeriodo.getInicio().isEqual(newPeriodo.getFim())){
+                return "Data do período inválida";
+            }
             instituicao.setPeriodoAtual(newPeriodo);
             instituicao.getPeriodos().add(newPeriodo);
             this.periodoRepository.save(newPeriodo);
+            return "Período cadastrado com sucesso";
         }
 
         if (newPeriodo.getId() != null) {
@@ -34,9 +38,14 @@ public class PeriodoService {
                 periodoExistente.setFim(newPeriodo.getFim());
                 periodoExistente.setInicio(newPeriodo.getInicio());
                 periodoExistente.setPeriodo(newPeriodo.getPeriodo());
+                if (periodoExistente.getInicio().isAfter(periodoExistente.getFim()) || periodoExistente.getInicio().isEqual(periodoExistente.getFim())){
+                    return "Data do período inválida";
+                }
                 periodoRepository.save(periodoExistente);
+                return "Período cadastrado com sucesso";
             }
         }
+        return "";
     }
 
 
