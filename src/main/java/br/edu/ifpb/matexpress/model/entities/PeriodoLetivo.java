@@ -35,6 +35,7 @@ public class PeriodoLetivo implements Serializable {
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @NotNull(message="Campo obrigatório!")
     private LocalDate fim;
+
     @Transient
     private Instituicao instituicaoPertencente;
 

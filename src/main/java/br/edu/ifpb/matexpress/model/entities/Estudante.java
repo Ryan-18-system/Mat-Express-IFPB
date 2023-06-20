@@ -5,6 +5,7 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,17 +33,7 @@ public class Estudante {
     private Instituicao instituicaoAtual;
 
     @OneToMany(mappedBy = "titular", cascade = CascadeType.ALL,orphanRemoval = true)
+    @ToString.Exclude
     private List<Declaracao> declaracoes = new ArrayList<>();
-
-    @Override
-    public String toString() {
-        return "Estudante{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", matricula='" + matricula + '\'' +
-                ", instituicaoAtual=" + (instituicaoAtual != null ? instituicaoAtual.getId() : null) +
-                ", declaracoes=" + (declaracoes != null ? declaracoes.size() : null) +
-                '}';
-    }
 
 }

@@ -69,11 +69,7 @@ public class DeclaracaoController {
             redirectAttributes.addFlashAttribute("mensagemErro", mensagemErro);
             return new ModelAndView("redirect:/matexpress/declaracoes/" + declaracao.getTitular().getId());
         }
-
-        String nomeArquivo = StringUtils.cleanPath(arquivo.getOriginalFilename());
-        Documento documento = documentoService.gravar(declaracao, nomeArquivo, arquivo.getBytes());
-        documento.setUrl(buildUrl(declaracao.getId(), documento.getId()));
-        declaracao.setDocumento(documento);
+        uploadArquivo(arquivo, declaracao);
         modelAndView.setViewName("redirect:/matexpress/estudantes");
         declaracaoService.novaDeclaracao(declaracao);
         return modelAndView;
@@ -86,6 +82,13 @@ public class DeclaracaoController {
             }
         }
         return null;
+    }
+
+    private void uploadArquivo(MultipartFile arquivo, Declaracao declaracao) throws IOException {
+        String nomeArquivo = StringUtils.cleanPath(arquivo.getOriginalFilename());
+        Documento documento = documentoService.gravar(declaracao, nomeArquivo, arquivo.getBytes());
+        documento.setUrl(buildUrl(declaracao.getId(), documento.getId()));
+        declaracao.setDocumento(documento);
     }
 
     @GetMapping("gerar-pdf/{id}")
@@ -125,13 +128,6 @@ public class DeclaracaoController {
         return modelAndView;
     }
 
-    @GetMapping("/{id}/documentos/form")
-    public ModelAndView getForm(ModelAndView mav, @PathVariable(name = "id") Long id) {
-        mav.addObject("id", id);
-        mav.setViewName("declaracoes/documentos/form");
-        return mav;
-    }
-
     @GetMapping("/{id}/documentos/{idDoc}")
     public ResponseEntity<byte[]> getDocumentos(@PathVariable("id") Long id, @PathVariable("idDoc") Long idDoc, ModelAndView mav) {
         Optional<Documento> documento = Optional.ofNullable(documentoService.getDocumento(idDoc));
@@ -146,32 +142,6 @@ public class DeclaracaoController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-    }
-
-    @RequestMapping(value = "/{id}/documentos/upload", method = RequestMethod.POST)
-    @Transactional
-    public ModelAndView save(Declaracao declaracao, ModelAndView mav, @RequestParam("file") MultipartFile arquivo,
-                             RedirectAttributes attr) {
-        String mensagem = "";
-        String proxPagina = "";
-        try {
-            declaracaoRepository.save(declaracao);
-            Documento documento = new Documento(arquivo.getOriginalFilename(), arquivo.getBytes());
-            documento = documentoService.gravar(declaracao, arquivo.getOriginalFilename(), arquivo.getBytes());
-            documento.setUrl(buildUrl(declaracao.getId(), documento.getId()));
-            declaracao.setDocumento(documento);
-            declaracaoRepository.save(declaracao);
-            attr.addFlashAttribute("mensagem", documento.getId() + " cadastrado com sucesso!");
-            attr.addFlashAttribute("documento", documento);
-            proxPagina = "redirect:declaracoes";
-        } catch (Exception e) {
-            mensagem = "Não foi possível carregar o documento: " + arquivo.getOriginalFilename() + "! "
-                    + e.getMessage();
-            proxPagina = "/declaracoes/form";
-        }
-        mav.addObject("mensagem", mensagem);
-        mav.setViewName(proxPagina);
-        return mav;
     }
 
     private String buildUrl(Long idDeclaracao, Long idDocumento) {
