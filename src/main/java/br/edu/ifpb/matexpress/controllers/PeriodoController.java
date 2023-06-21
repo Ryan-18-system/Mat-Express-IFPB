@@ -22,20 +22,29 @@ public class PeriodoController {
     private PeriodoService periodoService;
     @Autowired
     private InstituicaoService instituicaoService;
+
+    String mensagem;
+
     @GetMapping("/form")
     public String formPeriodo(PeriodoLetivo periodoLetivo, Model model){
         model.addAttribute("periodoLetivo", periodoLetivo);
         return "periodoletivo/form";
     }
     @PostMapping("**/salvarperiodo")
-    public ModelAndView cadastrarPeriodoLetivo(@Valid PeriodoLetivo periodoLetivo, BindingResult result){
+    public ModelAndView cadastrarPeriodoLetivo(@Valid PeriodoLetivo periodoLetivo, BindingResult result, ModelAndView mv, RedirectAttributes redirectAttributes){
         if (result.hasErrors()) {
-            ModelAndView mv = new ModelAndView("periodoletivo/form");
+            mv.setViewName("periodoletivo/form");
             return mv;
-        } else {
-            periodoService.cadastrarPeriodo(periodoLetivo);
-            return new ModelAndView("redirect:/matexpress/periodoletivo/listarperiodos");
         }
+        mensagem = this.periodoService.cadastrarPeriodo(periodoLetivo);
+        if (mensagem.equals("Data do período inválida")){
+            redirectAttributes.addFlashAttribute("mensagemErro", mensagem);
+            return new ModelAndView("redirect:/matexpress/periodoletivo/form");
+
+        }
+        mv.setViewName("redirect:/matexpress/periodoletivo/listarperiodos");
+        redirectAttributes.addFlashAttribute("mensagem", mensagem);
+        return mv;
     }
 
     @GetMapping("**/listarperiodos")

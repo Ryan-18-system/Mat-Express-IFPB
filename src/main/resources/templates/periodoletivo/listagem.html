@@ -5,7 +5,7 @@
     <div class="row mb-3">
         <div class="col-9">
             <h4>Listagem de períodos</h4>
-
+            <div th:text="${mensagem}" th:if="${mensagem ne null}" class="alert alert-success"></div>
         </div>
         <div class="col-3">
             <a class="btn btn-primary" role="button" th:href="@{form}">Cadastrar novo período</a>

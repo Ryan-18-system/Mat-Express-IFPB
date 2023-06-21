@@ -3,6 +3,7 @@
 <body>
 <div layout:fragment="content">
     <h4 class="mb-3">Cadastro de Período Letivo</h4>
+    <div th:text="${mensagemErro}" th:if="${mensagemErro != null}" class="alert alert-danger"></div>
     <form th:action="@{salvarperiodo}" method="POST" th:object="${periodoLetivo}">
         <input type="hidden" th:field="*{id}">
         <label class="form-label" for="ano">Ano:</label>

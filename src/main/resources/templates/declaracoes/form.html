@@ -3,14 +3,15 @@
 <body>
 <div layout:fragment="content">
 <form th:action="@{salvar}" method="post" th:object="${declaracao}" enctype="multipart/form-data">
+    <div th:text="${mensagemErro}" th:if="${mensagemErro != null}" class="alert alert-danger"></div>
 
     <input type="hidden" th:field="*{id}"/>
     <label class="form-label" for="dataRecebimento">Data Recebimento</label>
-    <input class="form-control" type="date" id="dataRecebimento" th:field="*{dataRecebimento}"><br>
+    <input class="form-control" type="date" id="dataRecebimento" th:field="*{dataRecebimento}" required><br>
 
 
     <label class="form-label" for="dataVencimento">Data Vencimento</label>
-    <input class="form-control" id="dataVencimento" type="date" th:field="*{dataVencimento}"/><br>
+    <input class="form-control" id="dataVencimento" type="date" th:field="*{dataVencimento}" required/><br>
     
     <label for="file">Arquivo</label><br>
     <input id="file" class="form-control" type="file" name="file" accept="doc/pdf" required /><br>

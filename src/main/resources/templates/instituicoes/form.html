@@ -12,17 +12,15 @@
         <label class="form-label" for="sigla">Sigla</label>
         <input class="form-control" id="sigla" type="text" maxlength="8" th:field="*{sigla}"th:errorclass="is-invalid">
         <div class="invalid-feedback" th:errors="*{sigla}"></div><br>
-        <hr>
 
-        <div th:if="${instituicao.periodos.size() > 0}">
+        <div class="mb-2" th:if="${instituicao.periodos.size() > 0}">
             <label class="form-label" for="periodos-instituicao">Escolha o seu período atual</label>
             <select class="form-select" id="periodos-instituicao" th:field="*{periodoAtual}">
                 <option th:each="p : ${periodosDaInstituicao}" th:value="${p.id}"
                         th:text="${'Período: '+p.periodo + ' | Duração: ' + p.inicio + ' ~ '+ p.fim }"></option>
             </select>
-            <hr>
         </div>
-        <br>
+
         <label class="form-label" for="telefone">Telefone</label>
         <input class="form-control" id="telefone" type="text" th:field="*{telefone}"th:errorclass="is-invalid">
         <div class="invalid-feedback" th:errors="*{telefone}"></div><br>
