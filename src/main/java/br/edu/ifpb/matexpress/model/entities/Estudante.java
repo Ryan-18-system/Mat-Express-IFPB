@@ -32,7 +32,7 @@ public class Estudante {
     @JoinColumn(name = "instituicao_atual_id",nullable = true)
     private Instituicao instituicaoAtual;
 
-    @OneToMany(mappedBy = "titular", cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "titular", cascade = CascadeType.ALL,orphanRemoval = true, fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<Declaracao> declaracoes = new ArrayList<>();
 

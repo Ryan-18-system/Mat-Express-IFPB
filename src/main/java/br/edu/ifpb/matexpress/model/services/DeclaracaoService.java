@@ -24,8 +24,12 @@ public class DeclaracaoService {
 
     @Transactional
     public void novaDeclaracao(Declaracao newDeclaracao) {
-        this.declaracaoRepository.atualizarTodasDeclaracoesAtualParaFalse();
+        //this.declaracaoRepository.atualizarAtualParaFalsePorId(newDeclaracao.getTitular().getId());
         this.declaracaoRepository.save(newDeclaracao);
+    }
+    @Transactional
+    public List<Declaracao> declaracaoDoEstudante(Long id){
+        return this.declaracaoRepository.getDeclaracaoByTitular(id);
     }
 
     @Transactional

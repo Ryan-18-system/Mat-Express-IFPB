@@ -20,9 +20,10 @@ public interface DeclaracaoRepository extends JpaRepository<Declaracao, Long> {
     @Query("UPDATE Declaracao d SET d.declaracaoAtual = false")
     void atualizarTodasDeclaracoesAtualParaFalse();
 
+    List<Declaracao> getDeclaracaoByTitular(Long id);
     @Transactional
     @Modifying
-    @Query("UPDATE Declaracao d SET d.declaracaoAtual = true WHERE d.id = :declaracaoId")
+    @Query("UPDATE Declaracao d SET d.declaracaoAtual = false WHERE d.id = :declaracaoId")
     void atualizarAtualParaFalsePorId(Long declaracaoId);
 
     @Query("SELECT d FROM Declaracao d WHERE d.dataVencimento = :dataVencimento")

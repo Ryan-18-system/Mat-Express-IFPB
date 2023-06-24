@@ -61,6 +61,7 @@ public class DeclaracaoController {
     }
 
     @PostMapping("salvar")
+    @Transactional
     public ModelAndView cadastrarDeclaracao(@ModelAttribute("declaracao") Declaracao declaracao,
             @RequestParam("file") MultipartFile arquivo,
             ModelAndView modelAndView, RedirectAttributes redirectAttributes) throws IOException {

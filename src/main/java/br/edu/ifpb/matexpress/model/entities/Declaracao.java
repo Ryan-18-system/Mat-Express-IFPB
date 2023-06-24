@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDate;
 @Entity
@@ -18,8 +19,9 @@ public class Declaracao {
 
     private LocalDate dataRecebimento;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "documento_id")
+    @ToString.Exclude
     private Documento documento;
 
     private LocalDate dataVencimento;
