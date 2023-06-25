@@ -5,7 +5,7 @@
     <div class="card rounded-4 mb-3" style="width: 60%;margin: auto;">
         <div class="flex-column d-flex p-5" style="width: 160%;margin: auto;">
             <h4>Relatório de declarações a vencer</h4>
-            <form th:action="@{/matexpress/declaracoes/relatorio}" method="GET">
+            <form th:action="@{/declaracoes/relatorio}" method="GET">
                 <div class="row">
                     <div class="col-md-3">
                         <label for="dias">Insira a quantidade de dias</label>
@@ -30,7 +30,7 @@
             <br>
             <div class="row">
                 <div class="col-md-3">
-                    <a th:href="@{/matexpress/declaracoes/relatorio-vencidas}">
+                    <a th:href="@{/declaracoes/relatorio-vencidas}">
                         <button class="btn btn-primary btn-md btn-block">
                             Gerar relatório
                         </button>
@@ -46,7 +46,7 @@
             <br>
             <div class="row">
                 <div class="col-md-3">
-                    <a th:href="@{/matexpress/estudantes/relatorio}">
+                    <a th:href="@{/estudantes/relatorio}">
                         <button class="btn btn-primary btn-md btn-block">
                             Gerar relatório
                         </button>

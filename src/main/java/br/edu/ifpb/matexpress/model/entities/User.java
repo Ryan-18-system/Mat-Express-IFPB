@@ -22,9 +22,9 @@ public class User {
 
     private String username;
     private String password;
-    private Boolean enabled = true;
+    private Boolean enabled;
 
-    @OneToMany(mappedBy = "username", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "username")
     @ToString.Exclude
     List<Authority> authorities;
 }

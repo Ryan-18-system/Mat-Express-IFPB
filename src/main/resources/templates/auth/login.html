@@ -6,30 +6,36 @@
 </head>
 
 <body class="text-center">
-
-<form class="form-signin" style="width: 500px; margin: auto" th:action="@{/login}" method="POST">
-    <div class="align-center justify-content-center">
-        <img th:src="@{/matexpress/imagens/logo-t3.png}" alt="Logo" width="170">
-        <br>
-        <h1 class="h4 mt-3 mb-3 font-weight-normal">Seja bem-vindo(a) ao MatExpress.</h1>
-        <h1 class="h4 mb-3 font-weight-normal">Por favor, faça seu login.</h1>
-
-        <div th:if="${not #strings.isEmpty(mensagem)}"
-             th:utext="${mensagem} +'<button type=&quot;button&quot; class=&quot;close&quot; data-dismiss=&quot;alert&quot; aria-label=&quot;Close&quot;><span aria-hidden=&quot;true&quot;>&times;</span></button>'"
-             class="alert alert-danger alert-dismissible fade show" role="alert">
-
-        </div>
-        <div class="card p-4">
-            <label for="username" class="sr-only text-align-left">Login</label>
-            <input type="username" id="username" class="form-control input-login" placeholder="username" required autofocus>
+    <form th:action="@{/auth}" class="form-signin" style="width: 500px; margin: auto"  method="POST">
+        <div class="align-center justify-content-center">
+            <img th:src="@{/imagens/logo-t3.png}" alt="Logo" width="170">
             <br>
-            <label for="password" class="sr-only">Senha</label>
-            <input type="password" id="password" class="form-control input-login" placeholder="password" required>
-            <br>
-            <button class="btn btn-lg btn-primary" type="submit">Entrar</button>
+            <h1 class="h4 mt-3 mb-3 font-weight-normal">Seja bem-vindo(a) ao MatExpress.</h1>
+            <h1 class="h4 mb-3 font-weight-normal">Por favor, faça seu login.</h1>
+
+            <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <span th:text="${error}"></span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div th:if="${not #strings.isEmpty(mensagem)}"
+                th:utext="${mensagem} +'<button type=&quot;button&quot; class=&quot;close&quot; data-dismiss=&quot;alert&quot; aria-label=&quot;Close&quot;><span aria-hidden=&quot;true&quot;>&times;</span></button>'"
+                class="alert alert-danger alert-dismissible fade show" role="alert">
+
+            </div>
+            <div class="card p-4">
+                <label for="username" class="sr-only text-align-left">Login</label>
+                <input type="text"  class="form-control input-login" placeholder="login" required autofocus name="username">
+                <br>
+                <label for="password" class="sr-only" >Senha</label>
+                <input type="password"  class="form-control input-login" placeholder="Senha" required name="password">
+                <br>
+                <button class="btn btn-lg btn-primary" type="submit">Entrar</button>
+            </div>
         </div>
-    </div>
-</form>
+    </form>
 
 </body>
 

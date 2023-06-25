@@ -1,28 +1,29 @@
 package br.edu.ifpb.matexpress.controllers;
 
 import br.edu.ifpb.matexpress.model.entities.User;
-import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
 
-    @GetMapping("/login")
+    @GetMapping
     public ModelAndView getForm(ModelAndView modelAndView) {
+        modelAndView.addObject("error", "Usuário e/ou senha inválidos");
         modelAndView.setViewName("auth/login");
-        modelAndView.addObject("user", new User());
         return modelAndView;
     }
 
-    @RequestMapping("/logout")
+    @GetMapping("/logout")
     public ModelAndView logout(ModelAndView mav, HttpSession session) {
         session.invalidate();
-        mav.setViewName("redirect:/matexpress/auth/login");
+        mav.setViewName("redirect:/auth");
         return mav;
     }
 }

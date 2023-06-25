@@ -7,6 +7,7 @@ import br.edu.ifpb.matexpress.model.repositories.InstituicaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/instituicoes")
+@PreAuthorize("hasRole('ADMIN')")
 public class InstituicaoController {
     @Autowired
     private InstituicaoService instituicaoService;
@@ -43,7 +45,7 @@ public class InstituicaoController {
             return modelAndView;
         }
         mensagem = this.instituicaoService.cadastrarInstituicao(instituicao);
-        modelAndView.setViewName("redirect:/matexpress/instituicoes");
+        modelAndView.setViewName("redirect:/instituicoes");
         redirectAttributes.addFlashAttribute("mensagem", mensagem);
         return modelAndView;
     }
@@ -80,7 +82,7 @@ public class InstituicaoController {
             RedirectAttributes redirectAttributes) {
         mensagem = this.instituicaoService.deletarPorId(idInstituicao);
         redirectAttributes.addFlashAttribute("mensagem", mensagem);
-        modelAndView.setViewName("redirect:/matexpress/instituicoes");
+        modelAndView.setViewName("redirect:/instituicoes");
         return modelAndView;
     }
 

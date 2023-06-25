@@ -1,5 +1,7 @@
 package br.edu.ifpb.matexpress.config;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -7,10 +9,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.core.userdetails.User;
-
-import javax.sql.DataSource;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -29,8 +29,9 @@ public class MatExpressSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticated()
                 .and()
                 .formLogin(form -> form
-                        .loginPage("/matexpress/auth/login")
+                        .loginPage("/auth")
                         .defaultSuccessUrl("/home", true)
+                        .failureUrl("/auth?error=true")
                         .permitAll())
                 .logout(logout -> logout.logoutUrl("/auth/logout"));
     }
@@ -43,8 +44,8 @@ public class MatExpressSecurityConfig extends WebSecurityConfigurerAdapter {
                 .dataSource(dataSource)
                 .passwordEncoder(encoder);
         // .withUser(
-        // User.builder().username("fabi").password(encoder.encode("123456")).roles("ADMIN").build())
+        // User.builder().username("fabi").password(encoder.encode("123")).roles("ADMIN").build())
         // .withUser(
-        // User.builder().username("pedro").password(encoder.encode("789")).roles("ALUNO").build());
+        // User.builder().username("vini").password(encoder.encode("456")).roles("ALUNO").build());
     }
 }

@@ -6,6 +6,7 @@ import br.edu.ifpb.matexpress.model.services.PeriodoService;
 import br.edu.ifpb.matexpress.model.entities.PeriodoLetivo;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/periodoletivo")
+@PreAuthorize("hasRole('ADMIN')")
 public class PeriodoController {
     @Autowired
     private PeriodoService periodoService;
@@ -40,13 +42,15 @@ public class PeriodoController {
         mensagem = this.periodoService.cadastrarPeriodo(periodoLetivo);
         if (mensagem.equals("Data do período inválida")){
             redirectAttributes.addFlashAttribute("mensagemErro", mensagem);
-            return new ModelAndView("redirect:/matexpress/periodoletivo/form");
+            return new ModelAndView("redirect:/periodoletivo/form");
 
         }
-        mv.setViewName("redirect:/matexpress/periodoletivo/listarperiodos");
+        mv.setViewName("redirect:/periodoletivo/listarperiodos");
         redirectAttributes.addFlashAttribute("mensagem", mensagem);
         return mv;
     }
+
+
 
     @GetMapping("**/listarperiodos")
     public ModelAndView listarPeriodos(ModelAndView modelAndView) {
@@ -81,7 +85,7 @@ public class PeriodoController {
             redirectAttributes.addFlashAttribute("message",
                     "Não foi possível deletar período, pois o mesmo está associado a uma Instituição");
         }
-        return "redirect:/matexpress/periodoletivo/listarperiodos";
+        return "redirect:/periodoletivo/listarperiodos";
     }
 
 }

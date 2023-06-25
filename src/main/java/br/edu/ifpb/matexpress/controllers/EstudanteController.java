@@ -12,6 +12,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/estudantes")
+@PreAuthorize("hasAnyRole('ADMIN', 'ALUNO')")
 public class EstudanteController {
     @Autowired
     private EstudanteService estudanteService;
@@ -56,7 +58,7 @@ public class EstudanteController {
             return modelAndView;
         }
         mensagem = this.estudanteService.cadastrarEstudante(estudante);
-        modelAndView.setViewName("redirect:/matexpress/estudantes");
+        modelAndView.setViewName("redirect:/estudantes");
         redirectAttributes.addFlashAttribute("mensagem", mensagem);
         return modelAndView;
     }
@@ -91,7 +93,7 @@ public class EstudanteController {
             RedirectAttributes redirectAttributes) {
         mensagem = this.estudanteService.deletarPorId(idEstudante);
         redirectAttributes.addFlashAttribute("mensagem", mensagem);
-        modelAndView.setViewName("redirect:/matexpress/estudantes");
+        modelAndView.setViewName("redirect:/estudantes");
         return modelAndView;
     }
 

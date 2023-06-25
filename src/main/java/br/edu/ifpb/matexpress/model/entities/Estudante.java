@@ -35,4 +35,8 @@ public class Estudante {
     @ToString.Exclude
     private List<Declaracao> declaracoes = new ArrayList<>();
 
+    @OneToOne
+    @JoinColumn(name = "username")
+    private User user;
+
 }
