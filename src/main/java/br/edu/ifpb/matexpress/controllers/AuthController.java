@@ -1,7 +1,7 @@
 package br.edu.ifpb.matexpress.controllers;
 
 import br.edu.ifpb.matexpress.model.entities.User;
-import jakarta.servlet.http.HttpSession;
+import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,9 +15,9 @@ public class AuthController {
     @GetMapping("/login")
     public ModelAndView getForm(ModelAndView modelAndView) {
         modelAndView.setViewName("auth/login");
+        modelAndView.addObject("user", new User());
         return modelAndView;
     }
-
 
     @RequestMapping("/logout")
     public ModelAndView logout(ModelAndView mav, HttpSession session) {
@@ -26,4 +26,3 @@ public class AuthController {
         return mav;
     }
 }
-

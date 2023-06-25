@@ -44,7 +44,7 @@
                             Estudantes
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownEstudantes">
-                            <a sec:authorize="hasRole('ADMIN')" class="dropdown-item" th:href="@{/matexpress/estudantes/}">Cadastrar</a>
+                            <a sec:authorize="hasRole('ADMIN', 'ALUNO')" class="dropdown-item" th:href="@{/matexpress/estudantes/}">Cadastrar</a>
                             <a class="dropdown-item" th:href="@{/matexpress/estudantes}">Listar</a>
                         </div>
                     </div>
