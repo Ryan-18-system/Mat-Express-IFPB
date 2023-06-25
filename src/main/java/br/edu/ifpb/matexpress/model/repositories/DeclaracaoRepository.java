@@ -3,7 +3,7 @@ package br.edu.ifpb.matexpress.model.repositories;
 import br.edu.ifpb.matexpress.model.entities.Declaracao;
 
 import br.edu.ifpb.matexpress.model.entities.Documento;
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

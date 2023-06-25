@@ -6,7 +6,7 @@ import br.edu.ifpb.matexpress.model.entities.Instituicao;
 import br.edu.ifpb.matexpress.model.entities.PeriodoLetivo;
 import br.edu.ifpb.matexpress.model.repositories.EstudanteRepository;
 import br.edu.ifpb.matexpress.model.repositories.InstituicaoRepository;
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +25,8 @@ public class EstudanteService {
 
     @Transactional
     public String cadastrarEstudante(Estudante newEstudante) {
-        Optional<Estudante> estudanteOptional = this.estudanteRepository.getEstudanteByMatricula(newEstudante.getMatricula());
+        Optional<Estudante> estudanteOptional = this.estudanteRepository
+                .getEstudanteByMatricula(newEstudante.getMatricula());
         if (estudanteOptional.isPresent()) {
             Estudante editEstudante = estudanteOptional.get();
             editEstudante.setNome(newEstudante.getNome());
@@ -46,7 +47,6 @@ public class EstudanteService {
     public List<Instituicao> listarInstituicoesCadastradas() {
         return this.instituicaoRepository.findAll();
     }
-
 
     public Estudante pesquisarPorId(Long idEstudante) {
         Optional<Estudante> estudanteOptional = this.estudanteRepository.findById(idEstudante);

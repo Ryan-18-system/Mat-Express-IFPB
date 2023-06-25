@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.edu.ifpb.matexpress.model.entities.Instituicao;
 import br.edu.ifpb.matexpress.model.entities.PeriodoLetivo;
 import br.edu.ifpb.matexpress.model.services.InstituicaoService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/instituicoes")
@@ -36,7 +36,7 @@ public class InstituicaoController {
     }
 
     @PostMapping("**/cadastrar")
-    public ModelAndView cadastrarInstituicao(@Valid Instituicao instituicao,BindingResult validation,
+    public ModelAndView cadastrarInstituicao(@Valid Instituicao instituicao, BindingResult validation,
             ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
         if (validation.hasErrors()) {
             modelAndView.setViewName("instituicoes/form");
@@ -65,8 +65,9 @@ public class InstituicaoController {
     @GetMapping("/editarinstituicao/{idInstituicao}")
     public ModelAndView editarInstituicao(ModelAndView modelAndView,
             @PathVariable("idInstituicao") Long idInstituicao) {
-        //        periodos.addAll(this.instituicaoService.listarPeriodosCadastrados());
-        List<PeriodoLetivo> periodos = new ArrayList<>(this.instituicaoService.listarPeriodosDaInstituicao(idInstituicao));
+        // periodos.addAll(this.instituicaoService.listarPeriodosCadastrados());
+        List<PeriodoLetivo> periodos = new ArrayList<>(
+                this.instituicaoService.listarPeriodosDaInstituicao(idInstituicao));
         modelAndView.setViewName("instituicoes/form");
         modelAndView.addObject("instituicao", instituicaoService.pesquisarPorId(idInstituicao));
         modelAndView.addObject("periodosDaInstituicao", periodos);
