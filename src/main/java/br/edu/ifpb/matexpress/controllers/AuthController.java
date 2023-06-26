@@ -15,7 +15,6 @@ public class AuthController {
 
     @GetMapping
     public ModelAndView getForm(ModelAndView modelAndView) {
-        modelAndView.addObject("error", "Usuário e/ou senha inválidos");
         modelAndView.setViewName("auth/login");
         return modelAndView;
     }

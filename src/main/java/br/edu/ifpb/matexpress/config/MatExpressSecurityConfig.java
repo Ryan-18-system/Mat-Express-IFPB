@@ -31,7 +31,7 @@ public class MatExpressSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin(form -> form
                         .loginPage("/auth")
                         .defaultSuccessUrl("/home", true)
-                        .failureUrl("/auth?error=true")
+                        // .failureUrl("/auth?error=true")
                         .permitAll())
                 .logout(logout -> logout.logoutUrl("/auth/logout"));
     }
