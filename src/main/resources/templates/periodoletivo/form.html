@@ -13,10 +13,10 @@
         <input type="number" id="periodo" th:field="*{periodo}" class="form-control" th:errorclass="is-invalid"/>
         <div class="invalid-feedback" th:errors="*{periodo}"></div><br>
         <label class="form-label" for="inicio-periodo">Inicio do Periodo:</label>
-        <input type="date" id="inicio-periodo" th:field="*{inicio}" class="form-control" th:errorclass="is-invalid" th:value="${periodoLetivo.getInicio()}"/>
+        <input type="date" id="inicio-periodo" th:format="'yyyy-MM-dd'" th:field="*{inicio}" class="form-control" th:errorclass="is-invalid" th:value="${periodoLetivo.getInicio()}"/>
         <div class="invalid-feedback" th:errors="*{inicio}"></div><br>
         <label for="fim-periodo" class="form-label">Fim do Periodo:</label>
-        <input type="date" id="fim-periodo" th:field="*{fim}" class="form-control" th:errorclass="is-invalid" th:value="${periodoLetivo.getFim()}"/>
+        <input type="date" th:format="'yyyy-MM-dd'" id="fim-periodo" th:field="*{fim}" class="form-control" th:errorclass="is-invalid" th:value="${periodoLetivo.getFim()}"/>
         <div class="invalid-feedback" th:errors="*{fim}"></div><br>
         <label class="form-label" for="instituicoes">Escolha a sua Instituição</label>
         <select class="form-select" id="instituicoes" th:field="*{instituicaoPertencente}">

@@ -32,6 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.constraints.Size;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -64,7 +65,7 @@ public class DeclaracaoController {
     @PostMapping("salvar")
     @Transactional
     public ModelAndView cadastrarDeclaracao(@ModelAttribute("declaracao") Declaracao declaracao,
-                                            @RequestParam("file") MultipartFile arquivo,
+                                            @RequestParam("file") @Size(max = 10 * 1024 * 1024, message = "Tamanho máximo do arquivo excedido") MultipartFile arquivo,
                                             ModelAndView modelAndView, RedirectAttributes redirectAttributes) throws IOException {
         String mensagemErro = verificarValidadeDatas(declaracao);
         if (mensagemErro != null) {

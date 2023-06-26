@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -18,6 +19,7 @@ public class Declaracao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataRecebimento;
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -25,6 +27,7 @@ public class Declaracao {
     @ToString.Exclude
     private Documento documento;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataVencimento;
 
     @OneToOne(cascade = CascadeType.REMOVE)
