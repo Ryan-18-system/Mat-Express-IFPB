@@ -6,7 +6,7 @@ import br.edu.ifpb.matexpress.model.entities.PeriodoLetivo;
 import br.edu.ifpb.matexpress.model.repositories.EstudanteRepository;
 import br.edu.ifpb.matexpress.model.repositories.InstituicaoRepository;
 import br.edu.ifpb.matexpress.model.repositories.PeriodoRepository;
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,20 +26,20 @@ public class InstituicaoService {
 
     @Transactional
     public String cadastrarInstituicao(Instituicao newInstituicao) {
-        if(Objects.isNull(newInstituicao.getId())){
+        if (Objects.isNull(newInstituicao.getId())) {
             instituicaoRepository.save(newInstituicao);
             return "Instituição cadastrada com sucesso";
         }
         Optional<Instituicao> instituicaoBanco = this.instituicaoRepository.findById(newInstituicao.getId());
-       if(instituicaoBanco.isPresent()){
-           instituicaoBanco.get().setNome(newInstituicao.getNome());
-           instituicaoBanco.get().setSigla(newInstituicao.getSigla());
-           instituicaoBanco.get().setTelefone(newInstituicao.getTelefone());
-           instituicaoBanco.get().setPeriodoAtual(newInstituicao.getPeriodoAtual());
-           instituicaoRepository.save(instituicaoBanco.get());
-           return "Instituição editada com sucesso";
-       }
-       return "";
+        if (instituicaoBanco.isPresent()) {
+            instituicaoBanco.get().setNome(newInstituicao.getNome());
+            instituicaoBanco.get().setSigla(newInstituicao.getSigla());
+            instituicaoBanco.get().setTelefone(newInstituicao.getTelefone());
+            instituicaoBanco.get().setPeriodoAtual(newInstituicao.getPeriodoAtual());
+            instituicaoRepository.save(instituicaoBanco.get());
+            return "Instituição editada com sucesso";
+        }
+        return "";
     }
 
     public List<Instituicao> listarInstituicoes() {
@@ -49,7 +49,8 @@ public class InstituicaoService {
     public List<PeriodoLetivo> listarPeriodosCadastrados() {
         return this.periodoRepository.listarPeriodosSemInstituicoes();
     }
-    public List<PeriodoLetivo>listarPeriodosDaInstituicao(Long idInstituicao){
+
+    public List<PeriodoLetivo> listarPeriodosDaInstituicao(Long idInstituicao) {
         return this.periodoRepository.listarPeriodosPorIdIntituicao(idInstituicao);
     };
 
@@ -61,8 +62,9 @@ public class InstituicaoService {
     public String deletarPorId(Long idInstituicao) {
         Optional<Instituicao> instituicaoBanco = this.instituicaoRepository.findById(idInstituicao);
         if (instituicaoBanco.isPresent()) {
-            List< Estudante> estudantes = this.estudanteRepository.estudantesDeUmaIntituicao(instituicaoBanco.get().getId());
-            estudantes.forEach( es -> es.setInstituicaoAtual(null));
+            List<Estudante> estudantes = this.estudanteRepository
+                    .estudantesDeUmaIntituicao(instituicaoBanco.get().getId());
+            estudantes.forEach(es -> es.setInstituicaoAtual(null));
             this.instituicaoRepository.deleteById(idInstituicao);
             return "Instituição deletada com sucesso";
         }

@@ -15,6 +15,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -31,6 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.constraints.Size;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -63,15 +65,15 @@ public class DeclaracaoController {
     @PostMapping("salvar")
     @Transactional
     public ModelAndView cadastrarDeclaracao(@ModelAttribute("declaracao") Declaracao declaracao,
-            @RequestParam("file") MultipartFile arquivo,
-            ModelAndView modelAndView, RedirectAttributes redirectAttributes) throws IOException {
+                                            @RequestParam("file") @Size(max = 10 * 1024 * 1024, message = "Tamanho máximo do arquivo excedido") MultipartFile arquivo,
+                                            ModelAndView modelAndView, RedirectAttributes redirectAttributes) throws IOException {
         String mensagemErro = verificarValidadeDatas(declaracao);
         if (mensagemErro != null) {
             redirectAttributes.addFlashAttribute("mensagemErro", mensagemErro);
-            return new ModelAndView("redirect:/matexpress/declaracoes/" + declaracao.getTitular().getId());
+            return new ModelAndView("redirect:/declaracoes/" + declaracao.getTitular().getId());
         }
         uploadArquivo(arquivo, declaracao);
-        modelAndView.setViewName("redirect:/matexpress/estudantes");
+        modelAndView.setViewName("redirect:/estudantes");
         declaracaoService.novaDeclaracao(declaracao);
         return modelAndView;
     }
@@ -91,6 +93,7 @@ public class DeclaracaoController {
         documento.setUrl(buildUrl(declaracao.getId(), documento.getId()));
         declaracao.setDocumento(documento);
     }
+
 
     @GetMapping("gerar-pdf/{id}")
     public ResponseEntity<byte[]> gerarPdf(@PathVariable("id") Long id) {
@@ -129,13 +132,21 @@ public class DeclaracaoController {
         return modelAndView;
     }
 
+    @GetMapping("/{id}/documentos/form")
+    public ModelAndView getForm(ModelAndView mav, @PathVariable(name = "id") Long id) {
+        mav.addObject("id", id);
+        mav.setViewName("declaracoes/documentos/form");
+        return mav;
+    }
+
     @GetMapping("/{id}/documentos/{idDoc}")
-    public ResponseEntity<byte[]> getDocumentos(@PathVariable("id") Long id, @PathVariable("idDoc") Long idDoc, ModelAndView mav) {
+    public ResponseEntity<byte[]> getDocumentos(@PathVariable("id") Long id, @PathVariable("idDoc") Long idDoc,
+            ModelAndView mav) {
         Optional<Documento> documento = Optional.ofNullable(documentoService.getDocumento(idDoc));
         if (documento.isPresent()) {
             Documento doc = documento.get();
             HttpHeaders headers = new HttpHeaders();
-            //mav.addObject("documento", documento.get());
+            // mav.addObject("documento", documento.get());
             headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
             headers.setContentDispositionFormData("attachment", doc.getNome());
 
@@ -143,6 +154,32 @@ public class DeclaracaoController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
+    }
+
+    @RequestMapping(value = "/{id}/documentos/upload", method = RequestMethod.POST)
+    @Transactional
+    public ModelAndView save(Declaracao declaracao, ModelAndView mav, @RequestParam("file") MultipartFile arquivo,
+            RedirectAttributes attr) {
+        String mensagem = "";
+        String proxPagina = "";
+        try {
+            declaracaoRepository.save(declaracao);
+            Documento documento = new Documento(arquivo.getOriginalFilename(), arquivo.getBytes());
+            documento = documentoService.gravar(declaracao, arquivo.getOriginalFilename(), arquivo.getBytes());
+            documento.setUrl(buildUrl(declaracao.getId(), documento.getId()));
+            declaracao.setDocumento(documento);
+            declaracaoRepository.save(declaracao);
+            attr.addFlashAttribute("mensagem", documento.getId() + " cadastrado com sucesso!");
+            attr.addFlashAttribute("documento", documento);
+            proxPagina = "redirect:declaracoes";
+        } catch (Exception e) {
+            mensagem = "Não foi possível carregar o documento: " + arquivo.getOriginalFilename() + "! "
+                    + e.getMessage();
+            proxPagina = "/declaracoes/form";
+        }
+        mav.addObject("mensagem", mensagem);
+        mav.setViewName(proxPagina);
+        return mav;
     }
 
     private String buildUrl(Long idDeclaracao, Long idDocumento) {
@@ -155,7 +192,6 @@ public class DeclaracaoController {
                 .toUriString();
         return fileDownloadUri;
     }
-
 
     private List<PeriodoLetivo> listarPeriodosDaIntituicao(Long id) {
         return this.instituicaoService.listarPeriodosDaInstituicao(id);

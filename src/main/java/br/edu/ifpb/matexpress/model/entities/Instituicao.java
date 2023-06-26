@@ -3,10 +3,10 @@ package br.edu.ifpb.matexpress.model.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -40,7 +40,7 @@ public class Instituicao {
     private List<PeriodoLetivo> periodos = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "periodo_atual_id",nullable = true)
+    @JoinColumn(name = "periodo_atual_id", nullable = true)
     private PeriodoLetivo periodoAtual;
 
     public void addPeriodo(PeriodoLetivo newPeriodo) {

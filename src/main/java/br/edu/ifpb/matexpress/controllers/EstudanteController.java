@@ -7,11 +7,12 @@ import br.edu.ifpb.matexpress.model.entities.PeriodoLetivo;
 import br.edu.ifpb.matexpress.model.repositories.EstudanteRepository;
 import br.edu.ifpb.matexpress.model.services.EstudanteService;
 import br.edu.ifpb.matexpress.model.services.InstituicaoService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -35,11 +36,12 @@ public class EstudanteController {
     String mensagem;
 
     @GetMapping("/declaracoes/{id}")
-    public ModelAndView declaracoes(ModelAndView modelAndView,@PathVariable("id") Long id){
+    public ModelAndView declaracoes(ModelAndView modelAndView, @PathVariable("id") Long id) {
         modelAndView.setViewName("estudantes/listagem-declaracoes");
         modelAndView.addObject("declaracoes", this.declaracoes(id));
         return modelAndView;
     }
+
     @GetMapping("/")
     public ModelAndView formEstudantes(Estudante estudante, ModelAndView modelAndView) {
         modelAndView.setViewName("estudantes/form");
@@ -49,13 +51,13 @@ public class EstudanteController {
 
     @PostMapping("**/cadastrar")
     public ModelAndView cadastrarEstudante(@Valid Estudante estudante, BindingResult validation,
-        ModelAndView modelAndView, RedirectAttributes redirectAttributes) {   
-        if(validation.hasErrors()){
+            ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
+        if (validation.hasErrors()) {
             modelAndView.setViewName("estudantes/form");
             return modelAndView;
         }
-        mensagem = this.estudanteService.cadastrarEstudante(estudante);  
-        modelAndView.setViewName("redirect:/matexpress/estudantes");
+        mensagem = this.estudanteService.cadastrarEstudante(estudante);
+        modelAndView.setViewName("redirect:/estudantes");
         redirectAttributes.addFlashAttribute("mensagem", mensagem);
         return modelAndView;
     }
@@ -74,8 +76,7 @@ public class EstudanteController {
 
     @GetMapping("/editarestudante/{idEstudante}")
     public ModelAndView editarEstudante(ModelAndView modelAndView,
-                                          @PathVariable("idEstudante") Long idEstudante
-    ) {
+            @PathVariable("idEstudante") Long idEstudante) {
         List<Instituicao> instituicoes = new ArrayList<>();
         instituicoes.addAll(this.estudanteService.listarInstituicoesCadastradas());
         instituicoes.addAll(this.instituicaoService.listarInstituicoes());
@@ -87,20 +88,20 @@ public class EstudanteController {
 
     @GetMapping("/removerestudante/{idEstudante}")
     public ModelAndView removerEstudante(ModelAndView modelAndView,
-                                           @PathVariable("idEstudante") Long idEstudante,
-                                           RedirectAttributes redirectAttributes) {
+            @PathVariable("idEstudante") Long idEstudante,
+            RedirectAttributes redirectAttributes) {
         mensagem = this.estudanteService.deletarPorId(idEstudante);
         redirectAttributes.addFlashAttribute("mensagem", mensagem);
-        modelAndView.setViewName("redirect:/matexpress/estudantes");
+        modelAndView.setViewName("redirect:/estudantes");
         return modelAndView;
     }
+
     @GetMapping("/relatorio")
     public ModelAndView relatoriosEstudantes(ModelAndView modelAndView) {
         modelAndView.setViewName("estudantes/relatorio");
         modelAndView.addObject("estudanteSemDeclaracao", this.estudantesRelatorio());
         return modelAndView;
     }
-
 
     @ModelAttribute("instituicoes")
     public List<Instituicao> instituicoes() {
@@ -112,10 +113,9 @@ public class EstudanteController {
         return this.estudanteService.listarEstudantes();
     }
 
-
     public List<Declaracao> declaracoes(Long idEstudante) {
         Estudante ePesquisado = this.estudanteService.pesquisarPorId(idEstudante);
-        return  ePesquisado.getDeclaracoes();
+        return ePesquisado.getDeclaracoes();
     }
 
     public List<Estudante> estudantesRelatorio() {

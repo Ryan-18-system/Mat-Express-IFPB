@@ -10,8 +10,8 @@
 
 <div th:fragment="header" class="jumbotron jumbotron-fluid">
     <div class="container-fluid" style="background-color: #f1f1f1; padding: 12px">
-        <a class="text-decoration-none d-flex" th:href="@{/matexpress/home}">
-            <img th:src="@{/matexpress/imagens/logo-t3.png}" alt="Logo" width="200">
+        <a class="text-decoration-none d-flex" th:href="@{/home}">
+            <img th:src="@{/imagens/logo-t3.png}" alt="Logo" width="200">
         </a>
 
     </div>
@@ -26,8 +26,8 @@
                             Instituições
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownInstituicoes">
-                            <a class="dropdown-item" th:href="@{/matexpress/instituicoes/}">Cadastrar</a>
-                            <a class="dropdown-item" th:href="@{/matexpress/instituicoes}">Listar</a>
+                            <a sec:authorize="hasRole('ADMIN')" class="dropdown-item" th:href="@{/instituicoes/}">Cadastrar</a>
+                            <a class="dropdown-item" th:href="@{/instituicoes}">Listar</a>
                         </div>
                     </div>
                     <div class="nav-item dropdown" th:classappend="${menu == 'periodoletivo'} ? 'active'">
@@ -35,8 +35,8 @@
                             Período
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownPeriodo">
-                            <a class="dropdown-item" th:href="@{/matexpress/periodoletivo/form}">Cadastrar</a>
-                            <a class="dropdown-item" th:href="@{/matexpress/periodoletivo/listarperiodos}">Listar</a>
+                            <a sec:authorize="hasRole('ADMIN')" class="dropdown-item" th:href="@{/periodoletivo/form}">Cadastrar</a>
+                            <a class="dropdown-item" th:href="@{/periodoletivo/listarperiodos}">Listar</a>
                         </div>
                     </div>
                     <div class="nav-item dropdown" th:classappend="${menu == 'estudantes'} ? 'active'">
@@ -44,16 +44,21 @@
                             Estudantes
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownEstudantes">
-                            <a class="dropdown-item" th:href="@{/matexpress/estudantes/}">Cadastrar</a>
-                            <a class="dropdown-item" th:href="@{/matexpress/estudantes}">Listar</a>
+                            <a sec:authorize="hasAnyRole('ADMIN', 'ALUNO')" class="dropdown-item" th:href="@{/estudantes/}">Cadastrar</a>
+                            <a class="dropdown-item" th:href="@{/estudantes}">Listar</a>
                         </div>
                     </div>
                     <div class="nav-item" th:classappend="${menu == 'relatorios'} ? 'active'">
-                            <a th:href="@{/matexpress/declaracoes/gerar-relatorios}">
+                            <a th:href="@{/declaracoes/gerar-relatorios}">
                                 <button class="btn btn-link" style="color: black">Relatórios</button>
                             </a>
                     </div>
                 </div>
         </div>
+        <form class="form-inline my-2 my-lg-0" th:action="@{/auth/logout}" method="POST">
+            <span sec:authorize="isAuthenticated()" sec:authentication="name" style="margin-right: 3px; font-size: 0.8em;"></span>
+                <button type="submit" class="btn btn-outline-secondary my-2 my-sm-0">Sair</button>
+        </form>
     </nav>
 </div>
+

@@ -48,19 +48,19 @@
         <nav aria-label="Navegação de página">
             <ul class="pagination">
                 <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
-                    <a class="page-link" th:href="@{/matexpress/estudantes(page=0)}">Primeira página</a>
+                    <a class="page-link" th:href="@{/estudantes(page=0)}">Primeira página</a>
                 </li>
                 <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
-                    <a class="page-link" th:href="@{/matexpress/estudantes(page=${currentPage - 1})}">Anterior</a>
+                    <a class="page-link" th:href="@{/estudantes(page=${currentPage - 1})}">Anterior</a>
                 </li>
                 <li class="page-item" th:each="pageNum : ${#numbers.sequence(0, totalPages - 1)}">
-                    <a class="page-link" th:href="@{/matexpress/estudantes(page=${pageNum})}" th:text="${pageNum + 1}"></a>
+                    <a class="page-link" th:href="@{/estudantes(page=${pageNum})}" th:text="${pageNum + 1}"></a>
                 </li>
                 <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
-                    <a class="page-link" th:href="@{/matexpress/estudantes(page=${currentPage + 1})}">Próxima</a>
+                    <a class="page-link" th:href="@{/estudantes(page=${currentPage + 1})}">Próxima</a>
                 </li>
                 <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
-                    <a class="page-link" th:href="@{/matexpress/estudantes(page=${totalPages - 1})}">Última página</a>
+                    <a class="page-link" th:href="@{/estudantes(page=${totalPages - 1})}">Última página</a>
                 </li>
             </ul>
         </nav>

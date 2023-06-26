@@ -4,8 +4,9 @@ import br.edu.ifpb.matexpress.model.entities.Instituicao;
 import br.edu.ifpb.matexpress.model.services.InstituicaoService;
 import br.edu.ifpb.matexpress.model.services.PeriodoService;
 import br.edu.ifpb.matexpress.model.entities.PeriodoLetivo;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,13 +24,14 @@ public class PeriodoController {
     @Autowired
     private InstituicaoService instituicaoService;
 
-    String mensagem;
+    private String mensagem;
 
     @GetMapping("/form")
-    public String formPeriodo(PeriodoLetivo periodoLetivo, Model model){
+    public String formPeriodo(PeriodoLetivo periodoLetivo, Model model) {
         model.addAttribute("periodoLetivo", periodoLetivo);
         return "periodoletivo/form";
     }
+
     @PostMapping("**/salvarperiodo")
     public ModelAndView cadastrarPeriodoLetivo(@Valid PeriodoLetivo periodoLetivo, BindingResult result, ModelAndView mv, RedirectAttributes redirectAttributes){
         if (result.hasErrors()) {
@@ -39,45 +41,50 @@ public class PeriodoController {
         mensagem = this.periodoService.cadastrarPeriodo(periodoLetivo);
         if (mensagem.equals("Data do período inválida")){
             redirectAttributes.addFlashAttribute("mensagemErro", mensagem);
-            return new ModelAndView("redirect:/matexpress/periodoletivo/form");
+            return new ModelAndView("redirect:/periodoletivo/form");
 
         }
-        mv.setViewName("redirect:/matexpress/periodoletivo/listarperiodos");
+        mv.setViewName("redirect:/periodoletivo/listarperiodos");
         redirectAttributes.addFlashAttribute("mensagem", mensagem);
         return mv;
     }
 
+
+
     @GetMapping("**/listarperiodos")
-    public ModelAndView listarPeriodos(ModelAndView modelAndView){
+    public ModelAndView listarPeriodos(ModelAndView modelAndView) {
         modelAndView.setViewName("periodoletivo/listagem");
         return modelAndView;
     }
 
     @ModelAttribute("periodos")
-    public List<PeriodoLetivo> periodoLetivos(){
-        return  periodoService.listarPeriodos();
+    public List<PeriodoLetivo> periodoLetivos() {
+        return periodoService.listarPeriodos();
     }
 
     @ModelAttribute("instituicoes")
-    public List<Instituicao> instituicoes(){
+    public List<Instituicao> instituicoes() {
         return instituicaoService.listarInstituicoes();
     }
 
     @GetMapping("/editarperiodo/{idPeriodo}")
-    public ModelAndView editarPeriodo(ModelAndView modelAndView, @PathVariable("idPeriodo") Long idPeriodo){
+    public ModelAndView editarPeriodo(ModelAndView modelAndView, @PathVariable("idPeriodo") Long idPeriodo) {
         modelAndView.setViewName("periodoletivo/form");
         modelAndView.addObject("periodoLetivo", periodoService.pesquisarPeriodoPorId(idPeriodo));
         return modelAndView;
     }
+
     @GetMapping("/removerperiodo/{idPeriodo}")
-    public String removerPeriodo(@PathVariable("idPeriodo") Long idPeriodo, Model model, RedirectAttributes redirectAttributes)  {
-        try{
+    public String removerPeriodo(@PathVariable("idPeriodo") Long idPeriodo, Model model,
+            RedirectAttributes redirectAttributes) {
+        try {
             periodoService.deletarPorId(idPeriodo);
 
-        }catch (Exception e ){
-            redirectAttributes.addFlashAttribute("message","Não foi possível deletar período, pois o mesmo está associado a uma Instituição");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message",
+                    "Não foi possível deletar período, pois o mesmo está associado a uma Instituição");
         }
-        return "redirect:/matexpress/periodoletivo/listarperiodos";
+        return "redirect:/periodoletivo/listarperiodos";
     }
 
 }

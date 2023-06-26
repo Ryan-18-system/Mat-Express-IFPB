@@ -1,7 +1,7 @@
 package br.edu.ifpb.matexpress.model.entities;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,7 +29,7 @@ public class Documento implements Serializable {
     @Lob
     private byte[] dados;
 
-    public Documento(String nome, byte[] dados){
+    public Documento(String nome, byte[] dados) {
         this.nome = nome;
         this.dados = dados;
     }

@@ -7,11 +7,11 @@
 
     <input type="hidden" th:field="*{id}"/>
     <label class="form-label" for="dataRecebimento">Data Recebimento</label>
-    <input class="form-control" type="date" id="dataRecebimento" th:field="*{dataRecebimento}" required><br>
+    <input class="form-control" type="date" th:format="'yyyy-MM-dd'" id="dataRecebimento" th:field="*{dataRecebimento}" required><br>
 
 
     <label class="form-label" for="dataVencimento">Data Vencimento</label>
-    <input class="form-control" id="dataVencimento" type="date" th:field="*{dataVencimento}" required/><br>
+    <input class="form-control" id="dataVencimento"type="date" th:format="'yyyy-MM-dd'" th:field="*{dataVencimento}" required/><br>
     
     <label for="file">Arquivo</label><br>
     <input id="file" class="form-control" type="file" name="file" accept="doc/pdf" required /><br>
@@ -34,7 +34,7 @@
     <br>
     <button type="submit" class="btn btn-primary mb-3">Cadastrar Declaração</button>
 </form>
-    <a class="btn btn-danger" role="button" th:href="@{/matexpress/estudantes}">Cancelar Cadastro</a>
+    <a class="btn btn-danger" role="button" th:href="@{/estudantes}">Cancelar Cadastro</a>
 
 
 </div>
