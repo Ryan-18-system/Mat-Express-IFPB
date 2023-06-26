@@ -18,7 +18,6 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/periodoletivo")
-@PreAuthorize("hasRole('ADMIN')")
 public class PeriodoController {
     @Autowired
     private PeriodoService periodoService;

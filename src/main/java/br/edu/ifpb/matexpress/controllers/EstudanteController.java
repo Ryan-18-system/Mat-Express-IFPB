@@ -24,7 +24,6 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/estudantes")
-@PreAuthorize("hasAnyRole('ADMIN', 'ALUNO')")
 public class EstudanteController {
     @Autowired
     private EstudanteService estudanteService;

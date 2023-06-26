@@ -21,7 +21,6 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/instituicoes")
-@PreAuthorize("hasRole('ADMIN')")
 public class InstituicaoController {
     @Autowired
     private InstituicaoService instituicaoService;
