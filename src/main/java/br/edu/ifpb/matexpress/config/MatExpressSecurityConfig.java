@@ -43,9 +43,9 @@ public class MatExpressSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .passwordEncoder(encoder);
-        // .withUser(
-        // User.builder().username("fabi").password(encoder.encode("123")).roles("ADMIN").build())
-        // .withUser(
-        // User.builder().username("vini").password(encoder.encode("456")).roles("ALUNO").build());
+//         .withUser(
+//         User.builder().username("fabi").password(encoder.encode("123")).roles("ADMIN").build())
+//         .withUser(
+//         User.builder().username("vini").password(encoder.encode("456")).roles("ALUNO").build());
     }
 }
