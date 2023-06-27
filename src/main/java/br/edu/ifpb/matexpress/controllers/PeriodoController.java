@@ -1,10 +1,14 @@
 package br.edu.ifpb.matexpress.controllers;
 
 import br.edu.ifpb.matexpress.model.entities.Instituicao;
+import br.edu.ifpb.matexpress.model.repositories.PeriodoRepository;
 import br.edu.ifpb.matexpress.model.services.InstituicaoService;
 import br.edu.ifpb.matexpress.model.services.PeriodoService;
 import br.edu.ifpb.matexpress.model.entities.PeriodoLetivo;
 import javax.validation.Valid;
+
+import br.edu.ifpb.matexpress.util.NavPage;
+import br.edu.ifpb.matexpress.util.NavPageBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -13,6 +17,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -23,6 +30,9 @@ public class PeriodoController {
     private PeriodoService periodoService;
     @Autowired
     private InstituicaoService instituicaoService;
+
+    @Autowired
+    private PeriodoRepository periodoRepository;
 
     private String mensagem;
 
@@ -50,9 +60,15 @@ public class PeriodoController {
     }
 
 
-
     @GetMapping("**/listarperiodos")
-    public ModelAndView listarPeriodos(ModelAndView modelAndView) {
+    public ModelAndView listarPeriodos(ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page,
+                                       @RequestParam(defaultValue = "5") int size) {
+        Pageable paging = PageRequest.of(page - 1, size);
+        Page<PeriodoLetivo> pagePeriodo = periodoRepository.findAll(paging);
+        NavPage navPage = NavPageBuilder.newNavPage(pagePeriodo.getNumber() + 1,
+                pagePeriodo.getTotalElements(), pagePeriodo.getTotalPages(), size);
+        modelAndView.addObject("periodoletivo", pagePeriodo);
+        modelAndView.addObject("navPage", navPage);
         modelAndView.setViewName("periodoletivo/listagem");
         return modelAndView;
     }

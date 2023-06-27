@@ -20,6 +20,13 @@
             </select>
         </div>
 
+        <div class="mb-2" th:if="${estudante.declaracoes.size() > 0}">
+            <label class="form-label" for="declaracoes">Escolha sua declaração</label>
+            <select class="form-select" th:field="*{declaracoes}" id="declaracoes" name="declaracoes">
+                <option th:each="declaracao : *{declaracoes}" th:value="${declaracao.id}" th:label="${declaracao.periodoLetivo.periodo}"></option>
+            </select>
+        </div>
+
         <br>
         <button type="submit" class="btn btn-primary mb-3">Salvar</button>
     </form>

@@ -9,9 +9,12 @@ import br.edu.ifpb.matexpress.model.services.EstudanteService;
 import br.edu.ifpb.matexpress.model.services.InstituicaoService;
 import javax.validation.Valid;
 
+import br.edu.ifpb.matexpress.util.NavPage;
+import br.edu.ifpb.matexpress.util.NavPageBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -63,13 +66,14 @@ public class EstudanteController {
     }
 
     @GetMapping("")
-    public ModelAndView listarEstudantes(@RequestParam(defaultValue = "0") int page, ModelAndView modelAndView) {
-        int pageSize = 10;
-        Page<Estudante> estudantePage = this.estudanteRepository.findAll(PageRequest.of(page, pageSize));
-        List<Estudante> estudantes = estudantePage.getContent();
-        modelAndView.addObject("estudantes", estudantes);
-        modelAndView.addObject("currentPage", page);
-        modelAndView.addObject("totalPages", estudantePage.getTotalPages());
+    public ModelAndView listarEstudantes(@RequestParam(defaultValue = "1") int page,
+                                         @RequestParam(defaultValue = "5") int size, ModelAndView modelAndView) {
+        Pageable paging = PageRequest.of(page - 1, size);
+        Page<Estudante> estudantesPage = estudanteRepository.findAll(paging);
+        NavPage navPage = NavPageBuilder.newNavPage(estudantesPage.getNumber() + 1,
+                estudantesPage.getTotalElements(), estudantesPage.getTotalPages(), size);
+        modelAndView.addObject("estudantes", estudantesPage);
+        modelAndView.addObject("navPage", navPage);
         modelAndView.setViewName("estudantes/listagem");
         return modelAndView;
     }

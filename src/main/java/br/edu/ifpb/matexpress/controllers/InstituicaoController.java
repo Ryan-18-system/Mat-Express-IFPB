@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.ifpb.matexpress.model.repositories.InstituicaoRepository;
+import br.edu.ifpb.matexpress.util.NavPage;
+import br.edu.ifpb.matexpress.util.NavPageBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -50,14 +53,14 @@ public class InstituicaoController {
     }
 
     @GetMapping("")
-    public ModelAndView listarInstituicoes(@RequestParam(defaultValue = "0") int page, ModelAndView modelAndView) {
-        int pageSize = 10; // Define o tamanho da página
-        Page<Instituicao> instituicoesPage = this.instituicaoRepository.findAll(PageRequest.of(page, pageSize));
-        List<Instituicao> instituicoes = instituicoesPage.getContent();
-
-        modelAndView.addObject("instituicoes", instituicoes);
-        modelAndView.addObject("currentPage", page);
-        modelAndView.addObject("totalPages", instituicoesPage.getTotalPages());
+    public ModelAndView listarInstituicoes(@RequestParam(defaultValue = "1") int page,
+                                           @RequestParam(defaultValue = "5") int size, ModelAndView modelAndView) {
+        Pageable paging = PageRequest.of(page - 1, size);
+        Page<Instituicao> instituicoesPage = this.instituicaoRepository.findAll(paging);
+        NavPage navPage = NavPageBuilder.newNavPage(instituicoesPage.getNumber() + 1,
+                instituicoesPage.getTotalElements(), instituicoesPage.getTotalPages(), size);
+        modelAndView.addObject("instituicoes", instituicoesPage);
+        modelAndView.addObject("navPage", navPage);
         modelAndView.setViewName("instituicoes/listagem");
 
         return modelAndView;
