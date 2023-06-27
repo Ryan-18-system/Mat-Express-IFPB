@@ -90,7 +90,10 @@ public class EstudanteController {
     public ModelAndView removerEstudante(ModelAndView modelAndView,
             @PathVariable("idEstudante") Long idEstudante,
             RedirectAttributes redirectAttributes) {
+
         mensagem = this.estudanteService.deletarPorId(idEstudante);
+
+
         redirectAttributes.addFlashAttribute("mensagem", mensagem);
         modelAndView.setViewName("redirect:/estudantes");
         return modelAndView;

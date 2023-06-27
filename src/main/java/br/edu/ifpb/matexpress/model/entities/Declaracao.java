@@ -30,11 +30,11 @@ public class Declaracao {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataVencimento;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne()
     @JoinColumn(name = "periodo_id", nullable = true)
     private PeriodoLetivo periodoLetivo;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST})
     private Estudante titular;
 
     private Boolean declaracaoAtual = true;
