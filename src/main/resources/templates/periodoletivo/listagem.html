@@ -42,6 +42,28 @@
             </tr>
             </tbody>
         </table>
+
+        <!-- Exibe os links de paginação -->
+        <nav aria-label="Navegação de página">
+            <ul class="pagination">
+                <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                    <a class="page-link" th:href="@{/periodoletivo/listarperiodos(page=0)}">Primeira página</a>
+                </li>
+                <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                    <a class="page-link" th:href="@{/periodoletivo/listarperiodos(page=${currentPage - 1})}">Anterior</a>
+                </li>
+                <li class="page-item" th:each="pageNum : ${#numbers.sequence(0, totalPages - 1)}">
+                    <a class="page-link" th:href="@{/periodoletivo/listarperiodos(page=${pageNum})}" th:text="${pageNum + 1}"></a>
+                </li>
+                <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                    <a class="page-link" th:href="@{/periodoletivo/listarperiodos(page=${currentPage + 1})}">Próxima</a>
+                </li>
+                <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                    <a class="page-link" th:href="@{/periodoletivo/listarperiodos(page=${totalPages - 1})}">Última página</a>
+                </li>
+            </ul>
+        </nav>
+
     </div>
 </div>
 </body>

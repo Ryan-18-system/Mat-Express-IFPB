@@ -1,11 +1,14 @@
 package br.edu.ifpb.matexpress.controllers;
 
 import br.edu.ifpb.matexpress.model.entities.Instituicao;
+import br.edu.ifpb.matexpress.model.repositories.PeriodoRepository;
 import br.edu.ifpb.matexpress.model.services.InstituicaoService;
 import br.edu.ifpb.matexpress.model.services.PeriodoService;
 import br.edu.ifpb.matexpress.model.entities.PeriodoLetivo;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +26,9 @@ public class PeriodoController {
     private PeriodoService periodoService;
     @Autowired
     private InstituicaoService instituicaoService;
+
+    @Autowired
+    private PeriodoRepository periodoRepository;
 
     private String mensagem;
 
@@ -52,7 +58,14 @@ public class PeriodoController {
 
 
     @GetMapping("**/listarperiodos")
-    public ModelAndView listarPeriodos(ModelAndView modelAndView) {
+    public ModelAndView listarPeriodos(@RequestParam(defaultValue = "0") int page, ModelAndView modelAndView) {
+        int pageSize = 5; // Define o tamanho da página
+        Page<PeriodoLetivo> periodoPage = this.periodoRepository.findAll(PageRequest.of(page, pageSize));
+        List<PeriodoLetivo> periodos = periodoPage.getContent();
+
+        modelAndView.addObject("periodoletivo", periodos);
+        modelAndView.addObject("currentPage", page);
+        modelAndView.addObject("totalPages", periodoPage.getTotalPages());
         modelAndView.setViewName("periodoletivo/listagem");
         return modelAndView;
     }

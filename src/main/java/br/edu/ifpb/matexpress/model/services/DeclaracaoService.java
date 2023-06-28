@@ -24,7 +24,7 @@ public class DeclaracaoService {
 
     @Transactional
     public void novaDeclaracao(Declaracao newDeclaracao) {
-        //this.declaracaoRepository.atualizarAtualParaFalsePorId(newDeclaracao.getTitular().getId());
+        this.declaracaoRepository.atualizarTodasDeclaracoesAtualParaFalse();
         this.declaracaoRepository.save(newDeclaracao);
     }
     @Transactional

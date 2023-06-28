@@ -51,7 +51,7 @@ public class InstituicaoController {
 
     @GetMapping("")
     public ModelAndView listarInstituicoes(@RequestParam(defaultValue = "0") int page, ModelAndView modelAndView) {
-        int pageSize = 10; // Define o tamanho da página
+        int pageSize = 5; // Define o tamanho da página
         Page<Instituicao> instituicoesPage = this.instituicaoRepository.findAll(PageRequest.of(page, pageSize));
         List<Instituicao> instituicoes = instituicoesPage.getContent();
 
